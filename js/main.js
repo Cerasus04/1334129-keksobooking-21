@@ -9,7 +9,7 @@ const TIMES = [`12:00`, `13:00`, `14:00`];
 const ROOMS = [1, 2, 3, 4];
 const MIN_GUESTS = 1;
 const MAX_GUESTS = 5;
-const PIN = { AMOUNT: 8, WIDTH: 40, HEIGHT: 40 };
+const PIN = { AMOUNT: 8, WIDTH: 40, HEIGHT: 40 }; //VS Code при сохранении добавляет пробелы после { и перед }, на что ругается ESLint, кто из них прав?? =))
 const PRICES = { MIN: 2500, MAX: 10000 };
 const LOCATIONS = { X_MIN: 0, X_MAX: 980, Y_MIN: 130, Y_MAX: 630 };
 
@@ -31,7 +31,7 @@ const getRandomRange = function (min, max) {
 const getRandomArr = function (arr, number, string) {
   const randomArr = [];
   for (let i = 0; i < number; i++) {
-    (string === undefined) ? randomArr.push(arr[getRandomNumber(arr.length)]) : randomArr.push(string + arr[getRandomNumber(arr.length)]);
+    (string === undefined) ? randomArr.push(arr[getRandomNumber(arr.length)]) : randomArr.push(string + arr[getRandomNumber(arr.length)]); // ругается на тернарный оператор, линтер хотел увидеть функцию, а тут такое =)) что делать с этим?
   }
 
   return Array.from(new Set(randomArr));
@@ -40,30 +40,28 @@ const getRandomArr = function (arr, number, string) {
 const getCards = function (quantity) {
   const cards = [];
   for (let i = 0; i < quantity; i++) {
-    cards.push(
-      {
-        author: {
-          avatar: `img/avatars/user0${i + 1}.png`,
-        },
-        offer: {
-          title: TITLES[i],
-          address: `${getRandomRange(LOCATIONS.X_MIN, LOCATIONS.X_MAX)}, ${getRandomRange(LOCATIONS.Y_MIN, LOCATIONS.Y_MAX)}`,
-          price: getRandomRange(PRICES.MIN, PRICES.MAX),
-          type: getRandomIndex(TYPES),
-          rooms: getRandomIndex(ROOMS),
-          guests: getRandomRange(MIN_GUESTS, MAX_GUESTS),
-          checkin: getRandomIndex(TIMES),
-          checkout: getRandomIndex(TIMES),
-          features: getRandomArr(FEATURES, getRandomNumber(FEATURES.length)),
-          description: `строка с описанием`,
-          photos: getRandomArr(PHOTOS, getRandomNumber(PHOTOS.length), PHOTOS_LINK)
-        },
-        location: {
-          x: getRandomRange(LOCATIONS.X_MIN, LOCATIONS.X_MAX),
-          y: getRandomRange(LOCATIONS.Y_MIN, LOCATIONS.Y_MAX)
-        }
+    cards.push({
+      author: {
+        avatar: `img/avatars/user0${i + 1}.png`,
+      },
+      offer: {
+        title: TITLES[i],
+        address: `${getRandomRange(LOCATIONS.X_MIN, LOCATIONS.X_MAX)}, ${getRandomRange(LOCATIONS.Y_MIN, LOCATIONS.Y_MAX)}`,
+        price: getRandomRange(PRICES.MIN, PRICES.MAX),
+        type: getRandomIndex(TYPES),
+        rooms: getRandomIndex(ROOMS),
+        guests: getRandomRange(MIN_GUESTS, MAX_GUESTS),
+        checkin: getRandomIndex(TIMES),
+        checkout: getRandomIndex(TIMES),
+        features: getRandomArr(FEATURES, getRandomNumber(FEATURES.length)),
+        description: `строка с описанием`,
+        photos: getRandomArr(PHOTOS, getRandomNumber(PHOTOS.length), PHOTOS_LINK)
+      },
+      location: {
+        x: getRandomRange(LOCATIONS.X_MIN, LOCATIONS.X_MAX),
+        y: getRandomRange(LOCATIONS.Y_MIN, LOCATIONS.Y_MAX)
       }
-    );
+    });
   }
   return cards;
 };
