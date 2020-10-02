@@ -9,7 +9,8 @@ const TIMES = [`12:00`, `13:00`, `14:00`];
 const ROOMS = [1, 2, 3, 4];
 const MIN_GUESTS = 1;
 const MAX_GUESTS = 5;
-const PIN = { AMOUNT: 8, WIDTH: 40, HEIGHT: 40 }; //VS Code при сохранении добавляет пробелы после { и перед }, на что ругается ESLint, кто из них прав?? =))
+const AMOUNT = 8;
+const PIN = { WIDTH: 40, HEIGHT: 40 };
 const PRICES = { MIN: 2500, MAX: 10000 };
 const LOCATIONS = { X_MIN: 0, X_MAX: 980, Y_MIN: 130, Y_MAX: 630 };
 
@@ -31,15 +32,18 @@ const getRandomRange = function (min, max) {
 const getRandomArr = function (arr, number, string) {
   const randomArr = [];
   for (let i = 0; i < number; i++) {
-    (string === undefined) ? randomArr.push(arr[getRandomNumber(arr.length)]) : randomArr.push(string + arr[getRandomNumber(arr.length)]); // ругается на тернарный оператор, линтер хотел увидеть функцию, а тут такое =)) что делать с этим?
+    if (string === undefined) {
+      randomArr.push(arr[getRandomNumber(arr.length)]);
+    } else {
+      randomArr.push(string + arr[getRandomNumber(arr.length)]);
+    }
   }
-
-  return Array.from(new Set(randomArr));
+  return randomArr;
 };
 
-const getCards = function (quantity) {
+const getCards = function () {
   const cards = [];
-  for (let i = 0; i < quantity; i++) {
+  for (let i = 0; i < AMOUNT; i++) {
     cards.push({
       author: {
         avatar: `img/avatars/user0${i + 1}.png`,
@@ -69,10 +73,11 @@ const getCards = function (quantity) {
 const renderPin = function (obj) {
   const pinTemplate = document.querySelector(`#pin`).content.querySelector(`.map__pin`);
   const pin = pinTemplate.cloneNode(true);
+  const imgEl = pin.querySelector(`img`);
   pin.style.left = `${obj.location.x + PIN.WIDTH / 2}px`;
   pin.style.top = `${obj.location.y + PIN.HEIGHT}px`;
-  pin.querySelector(`img`).src = obj.author.avatar;
-  pin.querySelector(`img`).alt = obj.offer.title;
+  imgEl.src = obj.author.avatar;
+  imgEl.alt = obj.offer.title;
   return pin;
 };
 
@@ -85,4 +90,4 @@ const createPins = function (pins) {
   mapPins.appendChild(fragment);
 };
 
-createPins(getCards(PIN.AMOUNT));
+createPins(getCards(AMOUNT));
