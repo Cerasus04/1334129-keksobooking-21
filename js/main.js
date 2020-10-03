@@ -3,8 +3,9 @@
 const TITLES = [`Комната в комуналке`, `Комната в общежитии`, `Квартира с косметическим ремонтом`, `Евро аппартаменты`, `Квартира с мебелью`, `Дом со всей техникой и мебелью`, `Дом с участком`, `Нежилое помещение`];
 const TYPES = [`palace`, `flat`, `house`, `bungalow`];
 const FEATURES = [`wifi`, `dishwasher`, `parking`, `washer`, `elevator`, `conditioner`];
-const PHOTOS_LINK = `http://o0.github.io/assets/images/tokyo/`;
-const PHOTOS = [`hotel1.jpg`, `hotel2.jpg`, `hotel3.jpg`];
+// const PHOTOS_LINK = `http://o0.github.io/assets/images/tokyo/`;
+// const PHOTOS = [`hotel1.jpg`, `hotel2.jpg`, `hotel3.jpg`];
+const PHOTOS = [`http://o0.github.io/assets/images/tokyo/hotel1.jpg`, `http://o0.github.io/assets/images/tokyo/hotel2.jpg`, `http://o0.github.io/assets/images/tokyo/hotel3.jpg`];
 const TIMES = [`12:00`, `13:00`, `14:00`];
 const ROOMS = [1, 2, 3, 4];
 const MIN_GUESTS = 1;
@@ -20,7 +21,7 @@ const PRICES = {
 };
 const LOCATIONS = {
   X_MIN: 0,
-  X_MAX: 980,
+  X_MAX: 1050,
   Y_MIN: 130,
   Y_MAX: 630
 };
@@ -38,10 +39,6 @@ const IMG = {
 const map = document.querySelector(`.map`);
 map.classList.remove(`map--faded`);
 
-const getRandomNumber = function (number) {
-  return Math.floor(Math.random() * number);
-};
-
 const getRandomIndex = function (arr) {
   return arr[Math.floor(Math.random() * arr.length)];
 };
@@ -50,24 +47,22 @@ const getRandomRange = function (min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 };
 
-const getRandomArr = function (arr, number, string) {
-  const randomArr = [];
-  for (let i = 0; i < number; i++) {
-    if (string === undefined) {
-      randomArr.push(arr[getRandomNumber(arr.length)]);
-    } else {
-      randomArr.push(string + arr[getRandomNumber(arr.length)]);
-    }
+const getShuffleArray = function (array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    const x = array[i];
+    array[i] = array[j];
+    array[j] = x;
   }
-  return randomArr;
-}; //изменить на функцию Фишера–Йейтса
+  return array;
+}; //функция Фишера–Йейтса
 
-const getCards = function () {
+const getCards = function () { //создание карточки объявления
   const cards = [];
   for (let i = 0; i < AMOUNT; i++) {
     cards.push({
       author: {
-        avatar: `img/avatars/user0${getRandomRange(1, AMOUNT)}.png`,
+        avatar: `img/avatars/user0${getRandomRange(1, AMOUNT)}.png`, //не изменяется при {i+1}
       },
       offer: {
         title: TITLES[getRandomRange(0, TITLES.length - 1)],
@@ -78,9 +73,9 @@ const getCards = function () {
         guests: getRandomRange(MIN_GUESTS, MAX_GUESTS),
         checkin: getRandomIndex(TIMES),
         checkout: getRandomIndex(TIMES),
-        features: getRandomArr(FEATURES, getRandomNumber(FEATURES.length)),
+        features: getShuffleArray(FEATURES).slice(0, getRandomRange(1, FEATURES.length)),
         description: `строка с описанием`,
-        photos: getRandomArr(PHOTOS, getRandomNumber(PHOTOS.length), PHOTOS_LINK)
+        photos: getShuffleArray(PHOTOS).slice(0, getRandomRange(1, PHOTOS.length)) //сделать через конкатенацию ссылки и фото. как?
       },
       location: {
         x: getRandomRange(LOCATIONS.X_MIN, LOCATIONS.X_MAX),
@@ -88,33 +83,31 @@ const getCards = function () {
       }
     });
   }
-  return cards;
+  return cards; //не нужно возвращать??
 };
 
-const renderPin = function (obj) {
+const renderPin = function (obj) { //создание пинов
   const pinTemplate = document.querySelector(`#pin`).content.querySelector(`.map__pin`);
   const pin = pinTemplate.cloneNode(true);
   const imgEl = pin.querySelector(`img`);
-  pin.style.left = `${obj.location.x + PIN.WIDTH / 2}px`;
-  pin.style.top = `${obj.location.y + PIN.HEIGHT}px`;
+  pin.style.left = `${obj.location.x - PIN.WIDTH / 2}px`;
+  pin.style.top = `${obj.location.y - PIN.HEIGHT}px`;
   imgEl.src = obj.author.avatar;
   imgEl.alt = obj.offer.title;
   return pin;
 };
 
-const createPins = function (pins) {
+const mapPins = map.querySelector(`.map__pins`);
+
+const createPins = function (pins) { //добавление пина
   const fragment = document.createDocumentFragment();
-  const mapPins = map.querySelector(`.map__pins`);
   for (let pin of pins) {
     fragment.appendChild(renderPin(pin));
   }
   mapPins.appendChild(fragment);
 };
 
-createPins(getCards(AMOUNT));
-
-const cardTemplate = document.querySelector(`#card`).content.querySelector(`.map__card`);
-const mapPins = map.querySelector(`.map__pins`);
+createPins(getCards()); //выводим пин
 
 const createFragmentObj = function (obj) {
   const fragmentFeatures = document.createDocumentFragment();
@@ -126,7 +119,7 @@ const createFragmentObj = function (obj) {
     fragmentFeatures.appendChild(li);
   }
   return fragmentFeatures;
-}; //не должны повторяться картинки
+};
 
 const createFragmentPhotos = function (pins) {
   const fragmentPhotos = document.createDocumentFragment();
@@ -143,6 +136,7 @@ const createFragmentPhotos = function (pins) {
 
 
 const createCard = function (obj) {
+  const cardTemplate = document.querySelector(`#card`).content.querySelector(`.map__card`);
   const cardItem = cardTemplate.cloneNode(true);
   const roomNum = obj.offer.rooms;
   const guestNum = obj.offer.guests;
