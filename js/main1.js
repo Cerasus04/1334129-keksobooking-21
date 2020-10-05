@@ -82,8 +82,9 @@ const getCards = () => {
       }
     });
   }
-  return cards;
 };
+
+getCards();
 
 const renderPin = (obj) => {
   const pinTemplate = document.querySelector(`#pin`).content.querySelector(`.map__pin`);
@@ -106,7 +107,7 @@ const createPins = (pins) => {
   mapPins.appendChild(fragment);
 };
 
-createPins(getCards());
+createPins();
 
 const createFragmentObj = (obj) => {
   const fragmentFeatures = document.createDocumentFragment();
