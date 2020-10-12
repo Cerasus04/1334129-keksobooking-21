@@ -198,6 +198,39 @@ const createCard = (obj) => {
   mapFilters.insertBefore(cardItem, null);
 };
 
+const popupClose = map.querySelectorAll(`.popup__close`);
+// const mapCard = map.querySelector(`.map__card`);
+
+// const addCardClose = function (mapCard) {
+//   mapCard.appendChild(popupClose);
+
+//   popupClose.addEventListener(`mousedown`, onPopupMousedown);
+//   popupClose.addEventListener(`keydown`, onPopupEscPress);
+// };
+
+const deleteMapCard = function () {
+  const mapCard = map.querySelector(`.map__card`);
+  if (mapCard !== null) {
+    mapCard.remove();
+
+    popupClose.removeEventListener(`mousedown`, onPopupMousedown);
+    popupClose.removeEventListener(`keydown`, onPopupEscPress);
+  }
+};
+
+const onPopupMousedown = (evt) => {
+  if (evt.button === 0) {
+    deleteMapCard();
+  }
+};
+
+const onPopupEscPress = function (evt) {
+  if (evt.key === Keys.ESC) {
+    evt.preventDefault();
+    deleteMapCard();
+  }
+};
+
 const initialaze = () => {
   createPins();
   map.classList.remove(`map--faded`);
@@ -214,10 +247,14 @@ const initialaze = () => {
   for (let i = 0; i < pins.length; i++) {
     pins[i].addEventListener(`click`, function () {
       createCard(cards[i]);
+      // addCardClose();
+      // deleteMapCard();
     });
   }
 
   isInited = true;
+  popupClose.addEventListener(`mousedown`, onPopupMousedown);
+  popupClose.addEventListener(`keydown`, onPopupEscPress);
 };
 
 pinMain.addEventListener(`click`, (evt) => {
