@@ -196,12 +196,44 @@ const createCard = (obj) => {
   cardPhotos.appendChild(createFragmentPhotos(obj.offer.photos));
 
   mapFilters.insertBefore(cardItem, null);
+
+};
+const mapFiltersContainer = document.querySelector(`.map__filters-container`);
+
+
+// const mapCard = map.querySelector(`.map__card`);
+// const popupClose = mapFiltersContainer.querySelectorAll(`.popup__close`);
+
+// const addCardClose = function () {
+
+//   popupClose.addEventListener(`mousedown`, onPopupMousedown);
+//   popupClose.addEventListener(`keydown`, onPopupEscPress);
+// };
+
+const deleteMapCard = function () {
+  mapFiltersContainer.querySelector(`.popup`).classList.add(`hidden`);
+  document.removeEventListener(`keydown`, onPopupEscPress);
+  document.removeEventListener(`click`, onPopupMousedown);
+};
+
+const onPopupMousedown = (evt) => {
+  if (evt.button === 0) {
+    deleteMapCard();
+  }
+};
+
+const onPopupEscPress = function (evt) {
+  if (evt.key === Keys.ESC) {
+    evt.preventDefault();
+    deleteMapCard();
+  }
 };
 
 const initialaze = () => {
   createPins();
   map.classList.remove(`map--faded`);
   addForm.classList.remove(`ad-form--disabled`);
+
   for (let i = 0; i < addFormFieldsets.length; i++) {
     addFormFieldsets[i].removeAttribute(`disabled`);
   }
@@ -214,6 +246,7 @@ const initialaze = () => {
   for (let i = 0; i < pins.length; i++) {
     pins[i].addEventListener(`click`, function () {
       createCard(cards[i]);
+      // addCardClose();
     });
   }
 
