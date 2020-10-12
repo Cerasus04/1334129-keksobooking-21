@@ -144,8 +144,6 @@ const createPins = () => {
   mapPins.appendChild(fragment);
 };
 
-// createPins();
-
 const createFragmentObj = (obj) => {
   const fragmentFeatures = document.createDocumentFragment();
   for (let i = 0; i < obj.length; i++) {
@@ -233,14 +231,6 @@ const initialaze = () => {
   createPins();
   map.classList.remove(`map--faded`);
   addForm.classList.remove(`ad-form--disabled`);
-
-  for (let i = 0; i < addFormFieldsets.length; i++) {
-    addFormFieldsets[i].removeAttribute(`disabled`);
-  }
-
-  for (let i = 0; i < mapFilters.children.length; i++) {
-    mapFilters.children[i].removeAttribute(`disabled`);
-  }
 
   let pins = document.querySelectorAll(`.map__pin:not(.map__pin--main)`);
   for (let i = 0; i < pins.length; i++) {
