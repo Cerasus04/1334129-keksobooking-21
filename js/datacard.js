@@ -4,9 +4,6 @@
   const getRandomRange = window.random.getRandomRange;
   const getRandomIndex = window.random.getRandomIndex;
   const getShuffleArray = window.random.getShuffleArray;
-  const closePopup = window.cards.closePopup;
-  const createCard = window.cards.createCard;
-  const mapPins = window.cards.mapPins;
 
   const AMOUNT = 8;
   const TITLES = [`Комната в комуналке`, `Комната в общежитии`, `Квартира с косметическим ремонтом`, `Евро аппартаменты`, `Квартира с мебелью`, `Дом со всей техникой и мебелью`, `Дом с участком`, `Нежилое помещение`];
@@ -28,12 +25,6 @@
   const PRICES = {
     MIN: 2500,
     MAX: 10000
-  };
-
-  const PIN = {
-    WIDTH: 65,
-    HEIGHT: 65,
-    MARKER_HEIGHT: 22
   };
 
   const cards = [];
@@ -67,45 +58,44 @@
 
   getCards();
 
-  const renderPin = (obj) => {
-    const pinTemplate = document.querySelector(`#pin`).content.querySelector(`.map__pin`);
-    const pin = pinTemplate.cloneNode(true);
-    const imgEl = pin.querySelector(`img`);
-    pin.style.left = `${obj.location.x - PIN.WIDTH / 2}px`;
-    pin.style.top = `${obj.location.y - (PIN.HEIGHT + PIN.MARKER_HEIGHT)}px`;
-    imgEl.src = obj.author.avatar;
-    imgEl.alt = obj.offer.title;
+  // const renderPin = (obj) => {
+  //   const pinTemplate = document.querySelector(`#pin`).content.querySelector(`.map__pin`);
+  //   const pin = pinTemplate.cloneNode(true);
+  //   const imgEl = pin.querySelector(`img`);
+  //   pin.style.left = `${obj.location.x - PIN.WIDTH / 2}px`;
+  //   pin.style.top = `${obj.location.y - (PIN.HEIGHT + PIN.MARKER_HEIGHT)}px`;
+  //   imgEl.src = obj.author.avatar;
+  //   imgEl.alt = obj.offer.title;
 
-    pin.addEventListener(`click`, function (evt) {
-      setPinActiveClass((evt.target.tagName === `IMG`) ? evt.target.parentElement : evt.target);
-      closePopup();
-      createCard(obj);
-    });
+  //   pin.addEventListener(`click`, function (evt) {
+  //     setPinActiveClass((evt.target.tagName === `IMG`) ? evt.target.parentElement : evt.target);
+  //     closePopup();
+  //     createCard(obj);
+  //   });
 
-    return pin;
-  };
+  //   return pin;
+  // };
 
-  const setPinActiveClass = (button) => {
-    let activePin = mapPins.querySelector(`.map__pin--active`);
+  // const setPinActiveClass = (button) => {
+  //   let activePin = mapPins.querySelector(`.map__pin--active`);
 
-    if (activePin) {
-      activePin.classList.remove(`map__pin--active`);
-    }
+  //   if (activePin) {
+  //     activePin.classList.remove(`map__pin--active`);
+  //   }
 
-    button.classList.add(`map__pin--active`);
-  };
+  //   button.classList.add(`map__pin--active`);
+  // };
 
-  const createPins = () => {
-    const fragment = document.createDocumentFragment();
-    for (let pin of cards) {
-      fragment.appendChild(renderPin(pin));
-    }
-    mapPins.appendChild(fragment);
-  };
+  // const createPins = () => {
+  //   const fragment = document.createDocumentFragment();
+  //   for (let pin of cards) {
+  //     fragment.appendChild(renderPin(pin));
+  //   }
+  //   mapPins.appendChild(fragment);
+  // };
 
-  window.data = {
-    PIN: PIN,
-    createPins: createPins
+  window.datacard = {
+    cards: cards
   };
 
 })();

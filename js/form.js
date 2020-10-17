@@ -1,34 +1,20 @@
 'use strict';
 
 (function () {
-  const map = document.querySelector(`.map`);
-  const mapPins = map.querySelector(`.map__pins`);
+  const PIN = window.datapin.PIN;
+  const map = window.cards.map;
+  const mapPins = window.cards.mapPins;
+
   const pinMain = mapPins.querySelector(`.map__pin--main`);
   const addForm = document.querySelector(`.ad-form`);
   const addressInput = addForm.querySelector(`#address`);
   const roomsNumber = addForm.querySelector(`#room_number`);
   const selectType = addForm.querySelector(`#type`);
-<<<<<<< HEAD
-  // const formFieldsets = document.querySelectorAll(`fieldset, select`);
-=======
-  const formFieldsets = document.querySelectorAll(`fieldset, select`);
->>>>>>> a985eefed12d01c607ce457bcd44a21a4333934f
   const guestsNumber = addForm.querySelector(`#capacity`);
   const optionsCapacity = guestsNumber.querySelectorAll(`option`);
   const buttonReset = addForm.querySelector(`.ad-form__reset`);
   const selectCheckIn = addForm.querySelector(`#timein`);
   const selectCheckOut = addForm.querySelector(`#timeout`);
-<<<<<<< HEAD
-  // const getAddress = window.move.getAddress;
-  // const getAddress = window.page.getAddress;
-=======
-
->>>>>>> a985eefed12d01c607ce457bcd44a21a4333934f
-  const PIN = {
-    WIDTH: 40,
-    HEIGHT: 40,
-    MARKER_HEIGHT: 22
-  };
 
   const mapTypeToPrice = {
     bungalow: 0,
@@ -43,24 +29,6 @@
     3: [`1`, `2`, `3`],
     100: [`0`]
   };
-
-<<<<<<< HEAD
-  // const setDisableState = () => {
-  //   formFieldsets.forEach((item) => {
-  //     item.disabled = !item.disabled;
-  //   });
-  // };
-
-  // setDisableState();
-=======
-  const setDisableState = () => {
-    formFieldsets.forEach((item) => {
-      item.disabled = !item.disabled;
-    });
-  };
-
-  setDisableState();
->>>>>>> a985eefed12d01c607ce457bcd44a21a4333934f
 
   const getAddress = () => {
     let x = parseInt(pinMain.style.left, 10);
@@ -109,7 +77,6 @@
     getAddress();
   });
 
-
   selectCheckIn.addEventListener(`change`, () => {
     changeCheckOut(selectCheckIn.value);
   });
@@ -124,12 +91,9 @@
     setMinPrice(mapTypeToPrice[selectType.value]);
   });
 
-
   window.form = {
-<<<<<<< HEAD
-=======
-    setDisableState: setDisableState,
->>>>>>> a985eefed12d01c607ce457bcd44a21a4333934f
+    addForm: addForm,
+    pinMain: pinMain,
     getAddress: getAddress
   };
 
