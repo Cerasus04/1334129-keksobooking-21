@@ -8,14 +8,22 @@
   const addressInput = addForm.querySelector(`#address`);
   const roomsNumber = addForm.querySelector(`#room_number`);
   const selectType = addForm.querySelector(`#type`);
+<<<<<<< HEAD
   // const formFieldsets = document.querySelectorAll(`fieldset, select`);
+=======
+  const formFieldsets = document.querySelectorAll(`fieldset, select`);
+>>>>>>> a985eefed12d01c607ce457bcd44a21a4333934f
   const guestsNumber = addForm.querySelector(`#capacity`);
   const optionsCapacity = guestsNumber.querySelectorAll(`option`);
   const buttonReset = addForm.querySelector(`.ad-form__reset`);
   const selectCheckIn = addForm.querySelector(`#timein`);
   const selectCheckOut = addForm.querySelector(`#timeout`);
+<<<<<<< HEAD
   // const getAddress = window.move.getAddress;
   // const getAddress = window.page.getAddress;
+=======
+
+>>>>>>> a985eefed12d01c607ce457bcd44a21a4333934f
   const PIN = {
     WIDTH: 40,
     HEIGHT: 40,
@@ -36,6 +44,7 @@
     100: [`0`]
   };
 
+<<<<<<< HEAD
   // const setDisableState = () => {
   //   formFieldsets.forEach((item) => {
   //     item.disabled = !item.disabled;
@@ -43,6 +52,15 @@
   // };
 
   // setDisableState();
+=======
+  const setDisableState = () => {
+    formFieldsets.forEach((item) => {
+      item.disabled = !item.disabled;
+    });
+  };
+
+  setDisableState();
+>>>>>>> a985eefed12d01c607ce457bcd44a21a4333934f
 
   const getAddress = () => {
     let x = parseInt(pinMain.style.left, 10);
@@ -108,6 +126,10 @@
 
 
   window.form = {
+<<<<<<< HEAD
+=======
+    setDisableState: setDisableState,
+>>>>>>> a985eefed12d01c607ce457bcd44a21a4333934f
     getAddress: getAddress
   };
 

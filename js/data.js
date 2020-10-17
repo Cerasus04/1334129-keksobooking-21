@@ -31,8 +31,13 @@
   };
 
   const PIN = {
+<<<<<<< HEAD
     WIDTH: 65,
     HEIGHT: 65,
+=======
+    WIDTH: 40,
+    HEIGHT: 40,
+>>>>>>> a985eefed12d01c607ce457bcd44a21a4333934f
     MARKER_HEIGHT: 22
   };
 
