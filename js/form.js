@@ -92,9 +92,9 @@
   });
 
   window.form = {
-    addForm: addForm,
-    pinMain: pinMain,
-    getAddress: getAddress
+    addForm,
+    pinMain,
+    getAddress
   };
 
 })();

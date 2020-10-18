@@ -49,8 +49,8 @@
   };
 
   window.datapin = {
-    PIN: PIN,
-    createPins: createPins
+    PIN,
+    createPins
   };
 
 })();

@@ -16,6 +16,8 @@
     });
   };
 
+  setDisableState();
+
   const initialaze = () => {
     map.classList.remove(`map--faded`);
     addForm.classList.remove(`ad-form--disabled`);
@@ -45,7 +47,7 @@
   pinMain.addEventListener(`keydown`, onMainPinKeysDown);
 
   window.mapinit = {
-    initialaze: initialaze
+    initialaze
   };
 
 })();

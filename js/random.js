@@ -33,10 +33,10 @@
   };
 
   window.random = {
-    getRandomIndex: getRandomIndex,
-    getRandomRange: getRandomRange,
-    getShuffleArray: getShuffleArray,
-    numDecline: numDecline
+    getRandomIndex,
+    getRandomRange,
+    getShuffleArray,
+    numDecline
   };
 
 })();

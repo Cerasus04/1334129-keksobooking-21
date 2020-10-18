@@ -1,5 +1,4 @@
 'use strict';
-// будут кнопки
 
 (function () {
   const Keys = {
@@ -24,8 +23,8 @@
   };
 
   window.util = {
-    isEnterEvent: isEnterEvent,
-    isEscapeEvent: isEscapeEvent,
-    isMouseLeftButtonEvent: isMouseLeftButtonEvent
+    isEnterEvent,
+    isEscapeEvent,
+    isMouseLeftButtonEvent
   };
 })();
