@@ -1,25 +1,20 @@
 'use strict';
 
 (function () {
-  const map = document.querySelector(`.map`);
-  const mapPins = map.querySelector(`.map__pins`);
+  const SIZE_PIN = window.pin.SIZE_PIN;
+  const map = window.cards.map;
+  const mapPins = window.cards.mapPins;
+
   const pinMain = mapPins.querySelector(`.map__pin--main`);
   const addForm = document.querySelector(`.ad-form`);
   const addressInput = addForm.querySelector(`#address`);
   const roomsNumber = addForm.querySelector(`#room_number`);
   const selectType = addForm.querySelector(`#type`);
-  const formFieldsets = document.querySelectorAll(`fieldset, select`);
   const guestsNumber = addForm.querySelector(`#capacity`);
   const optionsCapacity = guestsNumber.querySelectorAll(`option`);
   const buttonReset = addForm.querySelector(`.ad-form__reset`);
   const selectCheckIn = addForm.querySelector(`#timein`);
   const selectCheckOut = addForm.querySelector(`#timeout`);
-
-  const PIN = {
-    WIDTH: 40,
-    HEIGHT: 40,
-    MARKER_HEIGHT: 22
-  };
 
   const mapTypeToPrice = {
     bungalow: 0,
@@ -35,24 +30,16 @@
     100: [`0`]
   };
 
-  const setDisableState = () => {
-    formFieldsets.forEach((item) => {
-      item.disabled = !item.disabled;
-    });
-  };
-
-  setDisableState();
-
   const getAddress = () => {
     let x = parseInt(pinMain.style.left, 10);
     let y = parseInt(pinMain.style.top, 10);
 
     if (!map.classList.contains(`map--faded`)) {
-      x = `${Math.floor(x + PIN.WIDTH / 2)}`;
-      y = `${Math.floor(y + (PIN.HEIGHT + PIN.MARKER_HEIGHT))}`;
+      x = `${Math.floor(x + SIZE_PIN.WIDTH / 2)}`;
+      y = `${Math.floor(y + (SIZE_PIN.HEIGHT + SIZE_PIN.MARKER_HEIGHT))}`;
     } else {
-      x = `${Math.floor(x + PIN.WIDTH / 2)}`;
-      y = `${Math.floor(y + PIN.HEIGHT / 2)}`;
+      x = `${Math.floor(x + SIZE_PIN.WIDTH / 2)}`;
+      y = `${Math.floor(y + SIZE_PIN.HEIGHT / 2)}`;
     }
     addressInput.value = (`${x}, ${y}`);
   };
@@ -90,7 +77,6 @@
     getAddress();
   });
 
-
   selectCheckIn.addEventListener(`change`, () => {
     changeCheckOut(selectCheckIn.value);
   });
@@ -105,9 +91,9 @@
     setMinPrice(mapTypeToPrice[selectType.value]);
   });
 
-
   window.form = {
-    setDisableState: setDisableState,
+    addForm: addForm,
+    pinMain: pinMain,
     getAddress: getAddress
   };
 

@@ -1,5 +1,4 @@
 'use strict';
-// будут кнопки
 
 (function () {
   const Keys = {

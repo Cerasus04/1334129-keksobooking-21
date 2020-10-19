@@ -4,13 +4,19 @@
   const isEnterEvent = window.util.isEnterEvent;
   const isMouseLeftButtonEvent = window.util.isMouseLeftButtonEvent;
   const getAddress = window.form.getAddress;
-  const setDisableState = window.form.setDisableState;
-  const createPins = window.data.createPins;
+  const createPins = window.pin.createPins;
+  const map = window.cards.map;
+  const addForm = window.form.addForm;
+  const pinMain = window.form.pinMain;
+  const formFieldsets = document.querySelectorAll(`fieldset, select`);
 
-  const map = document.querySelector(`.map`);
-  const addForm = document.querySelector(`.ad-form`);
-  const mapPins = map.querySelector(`.map__pins`);
-  const pinMain = mapPins.querySelector(`.map__pin--main`);
+  const setDisableState = () => {
+    formFieldsets.forEach((item) => {
+      item.disabled = !item.disabled;
+    });
+  };
+
+  setDisableState();
 
   const initialaze = () => {
     map.classList.remove(`map--faded`);
@@ -39,5 +45,9 @@
 
   pinMain.addEventListener(`mousedown`, onMainPinMouseDown);
   pinMain.addEventListener(`keydown`, onMainPinKeysDown);
+
+  window.mapinit = {
+    initialaze: initialaze
+  };
 
 })();

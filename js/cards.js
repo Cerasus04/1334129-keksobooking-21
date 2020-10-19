@@ -100,6 +100,9 @@
   };
 
   window.cards = {
+    map: map,
+    mapFilters: mapFilters,
+    mapPins: mapPins,
     createCard: createCard,
     closePopup: closePopup
   };
