@@ -6,7 +6,7 @@
   const mapPins = window.cards.mapPins;
   const cards = window.datacard.cards;
 
-  const PIN = {
+  const SIZE_PIN = {
     WIDTH: 65,
     HEIGHT: 65,
     MARKER_HEIGHT: 22
@@ -16,8 +16,8 @@
     const pinTemplate = document.querySelector(`#pin`).content.querySelector(`.map__pin`);
     const pin = pinTemplate.cloneNode(true);
     const imgEl = pin.querySelector(`img`);
-    pin.style.left = `${obj.location.x - PIN.WIDTH / 2}px`;
-    pin.style.top = `${obj.location.y - (PIN.HEIGHT + PIN.MARKER_HEIGHT)}px`;
+    pin.style.left = `${obj.location.x - SIZE_PIN.WIDTH / 2}px`;
+    pin.style.top = `${obj.location.y - (SIZE_PIN.HEIGHT + SIZE_PIN.MARKER_HEIGHT)}px`;
     imgEl.src = obj.author.avatar;
     imgEl.alt = obj.offer.title;
 
@@ -48,9 +48,9 @@
     mapPins.appendChild(fragment);
   };
 
-  window.datapin = {
-    PIN,
-    createPins
+  window.pin = {
+    SIZE_PIN: SIZE_PIN,
+    createPins: createPins
   };
 
 })();

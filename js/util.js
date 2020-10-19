@@ -23,8 +23,8 @@
   };
 
   window.util = {
-    isEnterEvent,
-    isEscapeEvent,
-    isMouseLeftButtonEvent
+    isEnterEvent: isEnterEvent,
+    isEscapeEvent: isEscapeEvent,
+    isMouseLeftButtonEvent: isMouseLeftButtonEvent
   };
 })();

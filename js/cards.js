@@ -100,10 +100,10 @@
   };
 
   window.cards = {
-    map,
-    mapFilters,
-    mapPins,
-    createCard,
-    closePopup
+    map: map,
+    mapFilters: mapFilters,
+    mapPins: mapPins,
+    createCard: createCard,
+    closePopup: closePopup
   };
 })();

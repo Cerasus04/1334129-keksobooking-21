@@ -1,7 +1,7 @@
 'use strict';
 
 (function () {
-  const PIN = window.datapin.PIN;
+  const SIZE_PIN = window.pin.SIZE_PIN;
   const map = window.cards.map;
   const mapPins = window.cards.mapPins;
 
@@ -35,11 +35,11 @@
     let y = parseInt(pinMain.style.top, 10);
 
     if (!map.classList.contains(`map--faded`)) {
-      x = `${Math.floor(x + PIN.WIDTH / 2)}`;
-      y = `${Math.floor(y + (PIN.HEIGHT + PIN.MARKER_HEIGHT))}`;
+      x = `${Math.floor(x + SIZE_PIN.WIDTH / 2)}`;
+      y = `${Math.floor(y + (SIZE_PIN.HEIGHT + SIZE_PIN.MARKER_HEIGHT))}`;
     } else {
-      x = `${Math.floor(x + PIN.WIDTH / 2)}`;
-      y = `${Math.floor(y + PIN.HEIGHT / 2)}`;
+      x = `${Math.floor(x + SIZE_PIN.WIDTH / 2)}`;
+      y = `${Math.floor(y + SIZE_PIN.HEIGHT / 2)}`;
     }
     addressInput.value = (`${x}, ${y}`);
   };
@@ -92,9 +92,9 @@
   });
 
   window.form = {
-    addForm,
-    pinMain,
-    getAddress
+    addForm: addForm,
+    pinMain: pinMain,
+    getAddress: getAddress
   };
 
 })();

@@ -4,7 +4,7 @@
   const isEnterEvent = window.util.isEnterEvent;
   const isMouseLeftButtonEvent = window.util.isMouseLeftButtonEvent;
   const getAddress = window.form.getAddress;
-  const createPins = window.datapin.createPins;
+  const createPins = window.pin.createPins;
   const map = window.cards.map;
   const addForm = window.form.addForm;
   const pinMain = window.form.pinMain;
@@ -47,7 +47,7 @@
   pinMain.addEventListener(`keydown`, onMainPinKeysDown);
 
   window.mapinit = {
-    initialaze
+    initialaze: initialaze
   };
 
 })();

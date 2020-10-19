@@ -59,7 +59,7 @@
   getCards();
 
   window.datacard = {
-    cards
+    cards: cards
   };
 
 })();
