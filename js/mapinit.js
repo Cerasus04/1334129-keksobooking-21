@@ -54,15 +54,15 @@
   };
 
   const onError = (errorMessage) => {
-    const error = document.querySelector('#error');
-    error.style = 'z-index: 100; margin: 0 auto; text-align: center; background-color: rgba(3, 28, 45, 0.5);';
-    error.style.position = 'absolute';
+    const error = document.querySelector(`#error`);
+    error.style = `z-index: 100; margin: 0 auto; text-align: center; background-color: rgba(3, 28, 45, 0.5);`;
+    error.style.position = `absolute`;
     error.style.left = 0;
     error.style.right = 0;
-    error.style.fontSize = '24px';
+    error.style.fontSize = `24px`;
 
     error.textContent = `Не удалось загрузить данные: ${errorMessage}`;
-    document.body.insertAdjacentElement('afterbegin', error);
+    document.main.insertAdjacentElement(`afterbegin`, error);
   };
 
   const initialaze = () => {
