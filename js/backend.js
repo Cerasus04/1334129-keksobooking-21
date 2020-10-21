@@ -55,7 +55,7 @@
     xhr.send();
   };
 
-  const upload = (data, onLoad, onError) => {
+  const save = (data, onLoad, onError) => {
     const xhr = getXhrData(onLoad, onError);
 
     xhr.open(`POST`, URL_POST);
@@ -64,7 +64,7 @@
 
   window.backend = {
     load: load,
-    upload: upload
+    save: save
   };
 
 })();

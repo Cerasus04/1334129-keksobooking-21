@@ -81,6 +81,16 @@
     closePopup();
   };
 
+  const formSubmit = (evt) => {
+    evt.preventDefault();
+
+    const data = new FormData(addForm);
+    deactivate();
+    window.backend.save(data, onLoad, onError);
+
+    addForm.removeEventListener(`submit`, formSubmit);
+  };
+
   const onMainPinMouseDown = (evt) => {
     if (isMouseLeftButtonEvent(evt)) {
       initialaze();
@@ -97,11 +107,11 @@
     }
   };
 
-
   pinMain.addEventListener(`mousedown`, onMainPinMouseDown);
   pinMain.addEventListener(`keydown`, onMainPinKeysDown);
 
   buttonReset.addEventListener(`click`, deactivate);
+  addForm.addEventListener(`submit`, formSubmit);
 
   window.mapinit = {
     initialaze: initialaze,
