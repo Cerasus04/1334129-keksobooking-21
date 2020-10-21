@@ -44,7 +44,7 @@
     const pins = mapPins.querySelectorAll(`.map__pin:not(.map__pin--main)`);
     pins.forEach((item) => {
       item.remove();
-    })
+    });
   };
 
   const setPinActiveClass = (button) => {

@@ -1,7 +1,6 @@
 'use strict';
 
 (function () {
-  const map = window.data.map;
   const mapPins = window.data.mapPins;
 
   const pinMain = mapPins.querySelector(`.map__pin--main`);
