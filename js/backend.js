@@ -4,6 +4,12 @@
   const URL_GET = `https://21.javascript.pages.academy/keksobooking/data`;
   const URL_POST = `https://21.javascript.pages.academy/keksobooking`;
   const TIMEOUT = 1000;
+  const StatusCode = {
+    OK: 200,
+    BAD_REQUEST: 400,
+    NOT_FOUND: 404,
+    SERVER_ERROR: 500
+  }
 
   const getXhrData = function (onLoad, onError) {
     const xhr = new XMLHttpRequest();
@@ -12,16 +18,16 @@
     xhr.addEventListener(`load`, function () {
       let error;
       switch (xhr.status) {
-        case 200:
+        case StatusCode.OK:
           onLoad(xhr.response);
           break;
-        case 400:
+        case StatusCode.BAD_REQUEST:
           onLoad(xhr.response);
           break;
-        case 404:
+        case StatusCode.NOT_FOUND:
           error = `Страница не найдена`;
           break;
-        case 500:
+        case StatusCode.SERVER_ERROR:
           error = `Ошибка сервера`;
           break;
 
@@ -57,8 +63,8 @@
   };
 
   window.backend = {
-    load,
-    upload
+    load: load,
+    upload: upload
   };
 
 })();

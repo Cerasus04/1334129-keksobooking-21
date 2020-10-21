@@ -1,12 +1,14 @@
 'use strict';
 
 (function () {
+  const isEscapeEvent = window.util.isEscapeEvent;
+  const isMouseLeftButtonEvent = window.util.isMouseLeftButtonEvent;
   const map = document.querySelector(`.map`);
   const mapFilters = map.querySelector(`.map__filters`);
   const mapPins = map.querySelector(`.map__pins`);
   const IMG = {
-    WIDTH: 70,
-    HEIGHT: 70
+    WIDTH: 45,
+    HEIGHT: 40
   };
   const typeRental = {
     'flat': `Квартира`,
@@ -15,9 +17,18 @@
     'palace': `Дворец`
   };
 
-  const numDecline = window.random.numDecline;
-  const isEscapeEvent = window.util.isEscapeEvent;
-  const isMouseLeftButtonEvent = window.util.isMouseLeftButtonEvent;
+  const numDecline = (number, words) => {
+    number = Math.abs(number) % 100;
+
+    if (number > 10 && number < 20) {
+      return words[2];
+    } else if (number % 10 > 1 && number % 10 < 5) {
+      return words[1];
+    } else if (number % 10 === 1) {
+      return words[0];
+    }
+    return words[2];
+  };
 
   const createFragmentObj = (obj) => {
     const fragmentFeatures = document.createDocumentFragment();
@@ -42,29 +53,6 @@
       fragmentPhotos.appendChild(img);
     }
     return fragmentPhotos;
-  };
-
-  const closePopup = () => {
-    let popup = map.querySelector(`.popup`);
-
-    if (popup) {
-      popup.remove();
-    }
-
-    document.removeEventListener(`keydown`, onCloseButtonKeyDown);
-  };
-
-  const onCloseButtonKeyDown = (evt) => {
-    if (isEscapeEvent(evt)) {
-      evt.preventDefault();
-      closePopup();
-    }
-  };
-
-  const onCloseButtonClick = (evt) => {
-    if (isMouseLeftButtonEvent(evt)) {
-      closePopup();
-    }
   };
 
   const createCard = (obj) => {
@@ -99,7 +87,30 @@
     document.addEventListener(`keydown`, onCloseButtonKeyDown);
   };
 
-  window.cards = {
+  const closePopup = () => {
+    let popup = map.querySelector(`.popup`);
+
+    if (popup) {
+      popup.remove();
+    }
+
+    document.removeEventListener(`keydown`, onCloseButtonKeyDown);
+  };
+
+  const onCloseButtonKeyDown = (evt) => {
+    if (isEscapeEvent(evt)) {
+      evt.preventDefault();
+      closePopup();
+    }
+  };
+
+  const onCloseButtonClick = (evt) => {
+    if (isMouseLeftButtonEvent(evt)) {
+      closePopup();
+    }
+  };
+
+  window.data = {
     map: map,
     mapFilters: mapFilters,
     mapPins: mapPins,
