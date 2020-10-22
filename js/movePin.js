@@ -60,7 +60,7 @@
         y: moveEvt.clientY
       };
 
-      if (isMouseLeftButtonEvent(evt)) {
+      if (isMouseLeftButtonEvent(evt) && map.classList.contains(`.map--faded`)) {
         initialaze();
       }
 

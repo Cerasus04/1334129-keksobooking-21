@@ -2,7 +2,8 @@
 
 (function () {
   const mapPins = window.data.mapPins;
-
+  const isEscapeEvent = window.util.isEscapeEvent;
+  const isMouseLeftButtonEvent = window.util.isMouseLeftButtonEvent;
   const pinMain = mapPins.querySelector(`.map__pin--main`);
   const addForm = document.querySelector(`.ad-form`);
   const roomsNumber = addForm.querySelector(`#room_number`);
@@ -11,7 +12,26 @@
   const optionsCapacity = guestsNumber.querySelectorAll(`option`);
   const selectCheckIn = addForm.querySelector(`#timein`);
   const selectCheckOut = addForm.querySelector(`#timeout`);
+  const title = addForm.querySelector(`#title`);
   const inputPrice = addForm.querySelector(`#price`);
+  const submitButton = addForm.querySelector(`.ad-form__submit`);
+  const resetButton = addForm.querySelector(`.ad-form__reset`);
+  const main = document.querySelector(`main`);
+
+  const successPopup = document.querySelector(`#success`).content.querySelector(`.success`);
+  const errorPopup = document.querySelector(`#error`).content.querySelector(`.error`);
+  const errorPopupButton = errorPopup.querySelector(`.error__button`);
+
+  const Setting = {
+    title: {
+      minLength: 30,
+      maxLength: 100
+    },
+    price: {
+      maxValue: 1000000
+    }
+  };
+
   const mapTypeToPrice = {
     bungalow: 0,
     flat: 1000,
@@ -25,6 +45,27 @@
     3: [`1`, `2`, `3`],
     100: [`0`]
   };
+  const validateTitle = () => {
+    let errorMessage = ``;
+
+    if (title.value.length < Setting.title.minLength || title.value.length > Setting.title.maxLength) {
+      errorMessage = `Минимальная длина - 30 символов, максимальная длина - 100 символов`;
+    }
+    title.setCustomValidity(errorMessage);
+  };
+
+  validateTitle();
+
+  const validatePrice = () => {
+    let errorMessage = ``;
+
+    if (inputPrice.value > Setting.price.max) {
+      errorMessage = `Стоимость проживания не должна составлять более ${Setting.price.maxValue}`;
+    }
+    inputPrice.setCustomValidity(errorMessage);
+  };
+
+  validatePrice();
 
   const validateRooms = () => {
     optionsCapacity.forEach(function (option) {
@@ -62,6 +103,76 @@
   selectType.addEventListener(`change`, () => {
     setMinPrice(mapTypeToPrice[selectType.value]);
   });
+
+  const onLoad = () => {
+    window.mapinit.deactivate();
+    main.appendChild(successPopup);
+
+    document.addEventListener(`keydown`, onEscapeKeydown);
+    successPopup.addEventListener(`click`, onSuccessPopupClick);
+  };
+
+  const hideLoadSuccess = () => {
+    successPopup.remove();
+
+    document.removeEventListener(`keydown`, onEscapeKeydown);
+  };
+
+  const onError = () => {
+    main.appendChild(errorPopup);
+
+    document.addEventListener(`keydown`, onEscapeKeydown);
+    errorPopup.addEventListener(`click`, onErrorPopupClick);
+    errorPopupButton.addEventListener(`click`, onErrorPopupButtonClick);
+  };
+
+  const hideLoadError = () => {
+    errorPopup.remove();
+
+    document.removeEventListener(`keydown`, onEscapeKeydown);
+    document.removeEventListener(`click`, onErrorPopupClick);
+  };
+
+  const onEscapeKeydown = (evt) => {
+    if (isEscapeEvent(evt)) {
+      hideLoadSuccess();
+      hideLoadError();
+    }
+  };
+
+  const onSuccessPopupClick = (evt) => {
+    if (isMouseLeftButtonEvent(evt)
+      && evt.target === successPopup) {
+      hideLoadSuccess();
+    }
+  };
+
+  const onErrorPopupClick = (evt) => {
+    if (isMouseLeftButtonEvent(evt)
+      && evt.target === errorPopup) {
+      hideLoadError();
+    }
+  };
+
+  const onErrorPopupButtonClick = (evt) => {
+    if (isMouseLeftButtonEvent(evt)) {
+      hideLoadError();
+    }
+  };
+
+  const onSubmitButtonClick = (evt) => {
+    evt.preventDefault();
+
+    window.backend.save(new FormData(addForm), onLoad, onError);
+  };
+
+  const onResetButtonClick = (evt) => {
+    evt.preventDefault();
+    window.mapinit.deactivate();
+  };
+
+  submitButton.addEventListener(`click`, onSubmitButtonClick);
+  resetButton.addEventListener(`click`, onResetButtonClick);
 
   window.form = {
     addForm: addForm,

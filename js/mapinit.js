@@ -10,10 +10,15 @@
   const addForm = window.form.addForm;
   const pinMain = window.form.pinMain;
   const removePins = window.pin.removePins;
+  const main = document.querySelector(`main`);
 
   const addressInput = addForm.querySelector(`#address`);
   const formFieldsets = document.querySelectorAll(`fieldset, select`);
-  const buttonReset = addForm.querySelector(`.ad-form__reset`);
+
+  const defaultMainPin = {
+    x: pinMain.style.left,
+    y: pinMain.style.top
+  };
 
   const AMOUNT = 5;
   let pins = [];
@@ -43,7 +48,9 @@
 
   const onLoad = (data) => {
     for (let i = 0; i < data.length; i++) {
-      pins.push(data[i]);
+      if (data[i].offer) {
+        pins.push(data[i]);
+      }
     }
     map.classList.remove(`map--faded`);
     addForm.classList.remove(`ad-form--disabled`);
@@ -54,41 +61,41 @@
   };
 
   const onError = (errorMessage) => {
-    const error = document.querySelector(`#error`);
-    error.style = `z-index: 100; margin: 0 auto; text-align: center; background-color: rgba(3, 28, 45, 0.5);`;
+    const fragment = document.createDocumentFragment();
+    const error = document.createElement(`div`);
+    fragment.appendChild(error);
+    error.style = `z-index: 1000; margin: 0 auto; text-align: center; background-color: rgba(3, 28, 45, 0.5);`;
     error.style.position = `absolute`;
+    error.style.width = `100%`;
+    error.style.height = `50px`;
     error.style.left = 0;
     error.style.right = 0;
     error.style.fontSize = `24px`;
 
-    error.textContent = `Не удалось загрузить данные: ${errorMessage}`;
-    document.main.insertAdjacentElement(`afterbegin`, error);
+    error.textContent = `Не удалось загрузить данные: ${errorMessage}. Попробуйте перезагрузить страницу`;
+    main.prepend(fragment);
   };
 
   const initialaze = () => {
     window.backend.load(onLoad, onError);
   };
 
-  const deactivate = (evt) => {
-    evt.preventDefault();
+  const setMainPinDefault = () => {
+    pinMain.style.left = defaultMainPin.x;
+    pinMain.style.top = defaultMainPin.y;
+  };
 
+  const deactivate = () => {
     map.classList.add(`map--faded`);
     addForm.classList.add(`ad-form--disabled`);
+
     addForm.reset();
+    setMainPinDefault();
     getAddress();
     setDisableState();
     removePins();
     closePopup();
-  };
-
-  const formSubmit = (evt) => {
-    evt.preventDefault();
-
-    const data = new FormData(addForm);
-    deactivate();
-    window.backend.save(data, onLoad, onError);
-
-    addForm.removeEventListener(`submit`, formSubmit);
+    pinMain.addEventListener(`mousedown`, onMainPinMouseDown);
   };
 
   const onMainPinMouseDown = (evt) => {
@@ -110,11 +117,9 @@
   pinMain.addEventListener(`mousedown`, onMainPinMouseDown);
   pinMain.addEventListener(`keydown`, onMainPinKeysDown);
 
-  buttonReset.addEventListener(`click`, deactivate);
-  addForm.addEventListener(`submit`, formSubmit);
-
   window.mapinit = {
     initialaze: initialaze,
+    deactivate: deactivate,
     getAddress: getAddress
   };
 

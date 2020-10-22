@@ -22,17 +22,19 @@
           onLoad(xhr.response);
           break;
         case StatusCode.BAD_REQUEST:
-          onLoad(xhr.response);
           break;
         case StatusCode.NOT_FOUND:
-          error = `Страница не найдена`;
+          error = `страница не найдена`;
           break;
         case StatusCode.SERVER_ERROR:
-          error = `Ошибка сервера`;
+          error = `ошибка сервера`;
           break;
 
         default:
-          error = `Cтатус ответа: : ` + xhr.status + ` ` + xhr.statusText;
+          error = `статус ответа: : ` + xhr.status + ` ` + xhr.statusText;
+      }
+      if (error) {
+        onError(error);
       }
     });
 

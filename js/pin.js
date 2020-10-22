@@ -15,12 +15,11 @@
     const pinTemplate = document.querySelector(`#pin`).content.querySelector(`.map__pin`);
     const pin = pinTemplate.cloneNode(true);
     const imgEl = pin.querySelector(`img`);
-    if (item.hasOwnProperty(`offer`)) {
-      pin.style.left = `${item.location.x - SIZE_PIN.WIDTH / 2}px`;
-      pin.style.top = `${item.location.y - (SIZE_PIN.HEIGHT + SIZE_PIN.MARKER_HEIGHT)}px`;
-      imgEl.src = item.author.avatar;
-      imgEl.alt = item.offer.title;
-    }
+    pin.style.left = `${item.location.x - SIZE_PIN.WIDTH / 2}px`;
+    pin.style.top = `${item.location.y - (SIZE_PIN.HEIGHT + SIZE_PIN.MARKER_HEIGHT)}px`;
+    imgEl.src = item.author.avatar;
+    imgEl.alt = item.offer.title;
+
 
     pin.addEventListener(`click`, function (evt) {
       setPinActiveClass((evt.target.tagName === `IMG`) ? evt.target.parentElement : evt.target);
