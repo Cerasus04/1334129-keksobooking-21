@@ -1,20 +1,36 @@
 'use strict';
 
 (function () {
-  const SIZE_PIN = window.pin.SIZE_PIN;
-  const map = window.cards.map;
-  const mapPins = window.cards.mapPins;
-
+  const mapPins = window.data.mapPins;
+  const isEscapeEvent = window.util.isEscapeEvent;
+  const isMouseLeftButtonEvent = window.util.isMouseLeftButtonEvent;
   const pinMain = mapPins.querySelector(`.map__pin--main`);
   const addForm = document.querySelector(`.ad-form`);
-  const addressInput = addForm.querySelector(`#address`);
   const roomsNumber = addForm.querySelector(`#room_number`);
   const selectType = addForm.querySelector(`#type`);
   const guestsNumber = addForm.querySelector(`#capacity`);
   const optionsCapacity = guestsNumber.querySelectorAll(`option`);
-  const buttonReset = addForm.querySelector(`.ad-form__reset`);
   const selectCheckIn = addForm.querySelector(`#timein`);
   const selectCheckOut = addForm.querySelector(`#timeout`);
+  const title = addForm.querySelector(`#title`);
+  const inputPrice = addForm.querySelector(`#price`);
+  const submitButton = addForm.querySelector(`.ad-form__submit`);
+  const resetButton = addForm.querySelector(`.ad-form__reset`);
+  const main = document.querySelector(`main`);
+
+  const successPopup = document.querySelector(`#success`).content.querySelector(`.success`);
+  const errorPopup = document.querySelector(`#error`).content.querySelector(`.error`);
+  const errorPopupButton = errorPopup.querySelector(`.error__button`);
+
+  const Setting = {
+    title: {
+      minLength: 30,
+      maxLength: 100
+    },
+    price: {
+      maxValue: 1000000
+    }
+  };
 
   const mapTypeToPrice = {
     bungalow: 0,
@@ -30,21 +46,21 @@
     100: [`0`]
   };
 
-  const getAddress = () => {
-    let x = parseInt(pinMain.style.left, 10);
-    let y = parseInt(pinMain.style.top, 10);
-
-    if (!map.classList.contains(`map--faded`)) {
-      x = `${Math.floor(x + SIZE_PIN.WIDTH / 2)}`;
-      y = `${Math.floor(y + (SIZE_PIN.HEIGHT + SIZE_PIN.MARKER_HEIGHT))}`;
-    } else {
-      x = `${Math.floor(x + SIZE_PIN.WIDTH / 2)}`;
-      y = `${Math.floor(y + SIZE_PIN.HEIGHT / 2)}`;
+  const validateTitle = () => {
+    if (title.value.length < Setting.title.minLength || title.value.length > Setting.title.maxLength) {
+      title.reportValidity();
     }
-    addressInput.value = (`${x}, ${y}`);
   };
 
-  getAddress();
+  title.addEventListener(`input`, validateTitle);
+
+  const validatePrice = () => {
+    if (inputPrice.value > Setting.price.maxValue) {
+      inputPrice.reportValidity();
+    }
+  };
+
+  inputPrice.addEventListener(`input`, validatePrice);
 
   const validateRooms = () => {
     optionsCapacity.forEach(function (option) {
@@ -64,18 +80,10 @@
     selectCheckOut.value = checkOut;
   };
 
-  const inputPrice = addForm.querySelector(`#price`);
-
   const setMinPrice = (minPrice) => {
     inputPrice.min = minPrice;
     inputPrice.placeholder = minPrice;
   };
-
-  buttonReset.addEventListener(`click`, function (evt) {
-    evt.preventDefault();
-    addForm.reset();
-    getAddress();
-  });
 
   selectCheckIn.addEventListener(`change`, () => {
     changeCheckOut(selectCheckIn.value);
@@ -91,10 +99,80 @@
     setMinPrice(mapTypeToPrice[selectType.value]);
   });
 
+  const onLoad = () => {
+    window.mapinit.deactivate();
+    main.appendChild(successPopup);
+
+    document.addEventListener(`keydown`, onEscapeKeydown);
+    successPopup.addEventListener(`click`, onSuccessPopupClick);
+  };
+
+  const hideLoadSuccess = () => {
+    successPopup.remove();
+
+    document.removeEventListener(`keydown`, onEscapeKeydown);
+    document.removeEventListener(`click`, onErrorPopupClick);
+  };
+
+  const onError = () => {
+    main.appendChild(errorPopup);
+
+    document.addEventListener(`keydown`, onEscapeKeydown);
+    errorPopup.addEventListener(`click`, onErrorPopupClick);
+    errorPopupButton.addEventListener(`click`, onErrorPopupButtonClick);
+  };
+
+  const hideLoadError = () => {
+    errorPopup.remove();
+
+    document.removeEventListener(`keydown`, onEscapeKeydown);
+    document.removeEventListener(`click`, onErrorPopupClick);
+  };
+
+  const onEscapeKeydown = (evt) => {
+    if (isEscapeEvent(evt)) {
+      hideLoadSuccess();
+      hideLoadError();
+    }
+  };
+
+  const onSuccessPopupClick = (evt) => {
+    if (isMouseLeftButtonEvent(evt)
+      && evt.target === successPopup) {
+      hideLoadSuccess();
+    }
+  };
+
+  const onErrorPopupClick = (evt) => {
+    if (isMouseLeftButtonEvent(evt)
+      && evt.target === errorPopup) {
+      hideLoadError();
+    }
+  };
+
+  const onErrorPopupButtonClick = (evt) => {
+    if (isMouseLeftButtonEvent(evt)) {
+      hideLoadError();
+    }
+  };
+
+  const onSubmitButtonClick = (evt) => {
+    evt.preventDefault();
+
+    window.backend.save(new FormData(addForm), onLoad, onError);
+  };
+
+  const onResetButtonClick = (evt) => {
+    evt.preventDefault();
+    window.mapinit.deactivate();
+  };
+
+  submitButton.addEventListener(`click`, onSubmitButtonClick);
+  resetButton.addEventListener(`click`, onResetButtonClick);
+
   window.form = {
     addForm: addForm,
-    pinMain: pinMain,
-    getAddress: getAddress
+    pinMain: pinMain
   };
 
 })();

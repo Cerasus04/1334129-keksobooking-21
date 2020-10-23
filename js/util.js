@@ -9,17 +9,17 @@
 
   const MOUSE_LEFT_BUTTON = 0;
 
-  const isEnterEvent = function (evt) {
+  const isEnterEvent = (evt) => {
     return evt.code === Keys.ENTER
       || evt.code === Keys.NUMPAD_ENTER;
   };
 
-  const isMouseLeftButtonEvent = function (evt) {
+  const isMouseLeftButtonEvent = (evt) => {
     return evt.button === MOUSE_LEFT_BUTTON;
   };
 
-  const isEscapeEvent = function (evt) {
-    return evt.code === Keys.ESCAPE;
+  const isEscapeEvent = (evt) => {
+    return evt.code === Keys.ESC;
   };
 
   window.util = {

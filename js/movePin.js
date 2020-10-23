@@ -2,14 +2,13 @@
 
 (function () {
   const isMouseLeftButtonEvent = window.util.isMouseLeftButtonEvent;
-  const getAddress = window.form.getAddress;
+  const getAddress = window.mapinit.getAddress;
   const initialaze = window.mapinit.initialaze;
   const map = document.querySelector(`.map`);
   const mapPins = map.querySelector(`.map__pins`);
   const pinMain = mapPins.querySelector(`.map__pin--main`);
 
   const SIZE_PIN = window.pin.SIZE_PIN;
-
   const PIN_X_GAP = SIZE_PIN.WIDTH / 2;
   const PIN_Y_GAP = SIZE_PIN.HEIGHT + SIZE_PIN.MARKER_HEIGHT;
 
@@ -25,7 +24,7 @@
     let y = pinMain.offsetTop - shift.y;
 
     if (x < restrictionCoords.minX - PIN_X_GAP) {
-      x = 1;
+      x = restrictionCoords.minX;
     } else if (x > restrictionCoords.maxX - PIN_X_GAP) {
       x = restrictionCoords.maxX - PIN_X_GAP;
     }
@@ -61,7 +60,7 @@
         y: moveEvt.clientY
       };
 
-      if (isMouseLeftButtonEvent(evt)) {
+      if (isMouseLeftButtonEvent(evt) && map.classList.contains(`.map--faded`)) {
         initialaze();
       }
 
