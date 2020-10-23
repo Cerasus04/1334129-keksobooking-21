@@ -99,7 +99,6 @@
 
   const onCloseButtonKeyDown = (evt) => {
     if (isEscapeEvent(evt)) {
-      evt.preventDefault();
       closePopup();
     }
   };

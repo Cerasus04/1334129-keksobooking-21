@@ -45,27 +45,22 @@
     3: [`1`, `2`, `3`],
     100: [`0`]
   };
-  const validateTitle = () => {
-    let errorMessage = ``;
 
+  const validateTitle = () => {
     if (title.value.length < Setting.title.minLength || title.value.length > Setting.title.maxLength) {
-      errorMessage = `Минимальная длина - 30 символов, максимальная длина - 100 символов`;
+      title.reportValidity();
     }
-    title.setCustomValidity(errorMessage);
   };
 
-  validateTitle();
+  title.addEventListener(`input`, validateTitle);
 
   const validatePrice = () => {
-    let errorMessage = ``;
-
-    if (inputPrice.value > Setting.price.max) {
-      errorMessage = `Стоимость проживания не должна составлять более ${Setting.price.maxValue}`;
+    if (inputPrice.value > Setting.price.maxValue) {
+      inputPrice.reportValidity();
     }
-    inputPrice.setCustomValidity(errorMessage);
   };
 
-  validatePrice();
+  inputPrice.addEventListener(`input`, validatePrice);
 
   const validateRooms = () => {
     optionsCapacity.forEach(function (option) {
@@ -116,6 +111,7 @@
     successPopup.remove();
 
     document.removeEventListener(`keydown`, onEscapeKeydown);
+    document.removeEventListener(`click`, onErrorPopupClick);
   };
 
   const onError = () => {
