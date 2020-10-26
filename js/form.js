@@ -13,7 +13,7 @@
   const optionsCapacity = guestsNumber.querySelectorAll(`option`);
   const selectCheckIn = addForm.querySelector(`#timein`);
   const selectCheckOut = addForm.querySelector(`#timeout`);
-  const title = addForm.querySelector(`#title`);
+  const inputTitle = addForm.querySelector(`#title`);
   const inputPrice = addForm.querySelector(`#price`);
   const submitButton = addForm.querySelector(`.ad-form__submit`);
   const resetButton = addForm.querySelector(`.ad-form__reset`);
@@ -43,20 +43,21 @@
   };
 
   const validateTitle = () => {
-    if (title.value.length < Setting.title.minLength || title.value.length > Setting.title.maxLength) {
-      title.reportValidity();
+    let errorMessage = ``;
+    const valueLength = inputTitle.value.length;
+    if (valueLength < Setting.title.minLength || valueLength > Setting.title.maxLength) {
+      errorMessage = `Минимальная длина заголовка объявления - ${Setting.title.minLength} символов, максимальная -  ${Setting.title.maxLength}`;
     }
   };
-
-  title.addEventListener(`input`, validateTitle);
 
   const validatePrice = () => {
-    if (inputPrice.value > Setting.price.maxValue) {
-      inputPrice.reportValidity();
-    }
-  };
+    let errorMessage = ``;
 
-  inputPrice.addEventListener(`input`, validatePrice);
+    if (inputPrice.value < inputPrice.min || inputPrice.value > inputPrice.max) {
+      errorMessage = `Стоимость проживания должна быть не менее ${inputPrice.min}`;
+    }
+    inputPrice.setCustomValidity(errorMessage);
+  };
 
   const validateRooms = () => {
     optionsCapacity.forEach((option) => {
@@ -98,14 +99,22 @@
   const onSubmitButtonClick = (evt) => {
     evt.preventDefault();
 
+    inputTitle.addEventListener(`invalid`, validateTitle);
+    inputPrice.addEventListener(`invalid`, validatePrice);
+
     window.backend.save(new FormData(addForm), onLoad, onError);
+    submitButton.removeEventListener(`click`, onSubmitButtonClick);
   };
 
   const onResetButtonClick = (evt) => {
     evt.preventDefault();
+
     window.mapinit.deactivate();
+    resetButton.removeEventListener(`click`, onResetButtonClick);
   };
 
+  inputTitle.addEventListener(`input`, validateTitle);
+  inputPrice.addEventListener(`input`, validatePrice);
   submitButton.addEventListener(`click`, onSubmitButtonClick);
   resetButton.addEventListener(`click`, onResetButtonClick);
 
