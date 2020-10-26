@@ -17,7 +17,7 @@
   const inputPrice = addForm.querySelector(`#price`);
   const submitButton = addForm.querySelector(`.ad-form__submit`);
   const resetButton = addForm.querySelector(`.ad-form__reset`);
-
+  let errorMessage = ``;
   const Setting = {
     title: {
       minLength: 30,
@@ -43,7 +43,6 @@
   };
 
   const validateTitle = () => {
-    let errorMessage = ``;
     const valueLength = inputTitle.value.length;
     if (valueLength < Setting.title.minLength || valueLength > Setting.title.maxLength) {
       errorMessage = `Минимальная длина заголовка объявления - ${Setting.title.minLength} символов, максимальная -  ${Setting.title.maxLength}`;
@@ -51,8 +50,6 @@
   };
 
   const validatePrice = () => {
-    let errorMessage = ``;
-
     if (inputPrice.value < inputPrice.min || inputPrice.value > inputPrice.max) {
       errorMessage = `Стоимость проживания должна быть не менее ${inputPrice.min}`;
     }
