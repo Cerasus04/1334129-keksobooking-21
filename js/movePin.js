@@ -9,6 +9,7 @@
   const pinMain = mapPins.querySelector(`.map__pin--main`);
 
   const SIZE_PIN = window.pin.SIZE_PIN;
+  // const SIZE_PIN = window.marker.SIZE_PIN;
   const PIN_X_GAP = SIZE_PIN.WIDTH / 2;
   const PIN_Y_GAP = SIZE_PIN.HEIGHT + SIZE_PIN.MARKER_HEIGHT;
 

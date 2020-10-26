@@ -2,8 +2,9 @@
 
 (function () {
   const mapPins = window.data.mapPins;
-  const isEscapeEvent = window.util.isEscapeEvent;
-  const isMouseLeftButtonEvent = window.util.isMouseLeftButtonEvent;
+  const onLoad = window.message.onLoad;
+  const onError = window.message.onError;
+
   const pinMain = mapPins.querySelector(`.map__pin--main`);
   const addForm = document.querySelector(`.ad-form`);
   const roomsNumber = addForm.querySelector(`#room_number`);
@@ -12,16 +13,11 @@
   const optionsCapacity = guestsNumber.querySelectorAll(`option`);
   const selectCheckIn = addForm.querySelector(`#timein`);
   const selectCheckOut = addForm.querySelector(`#timeout`);
-  const title = addForm.querySelector(`#title`);
+  const inputTitle = addForm.querySelector(`#title`);
   const inputPrice = addForm.querySelector(`#price`);
   const submitButton = addForm.querySelector(`.ad-form__submit`);
   const resetButton = addForm.querySelector(`.ad-form__reset`);
-  const main = document.querySelector(`main`);
-
-  const successPopup = document.querySelector(`#success`).content.querySelector(`.success`);
-  const errorPopup = document.querySelector(`#error`).content.querySelector(`.error`);
-  const errorPopupButton = errorPopup.querySelector(`.error__button`);
-
+  let errorMessage = ``;
   const Setting = {
     title: {
       minLength: 30,
@@ -47,23 +43,21 @@
   };
 
   const validateTitle = () => {
-    if (title.value.length < Setting.title.minLength || title.value.length > Setting.title.maxLength) {
-      title.reportValidity();
+    const valueLength = inputTitle.value.length;
+    if (valueLength < Setting.title.minLength || valueLength > Setting.title.maxLength) {
+      errorMessage = `Минимальная длина заголовка объявления - ${Setting.title.minLength} символов, максимальная -  ${Setting.title.maxLength}`;
     }
   };
-
-  title.addEventListener(`input`, validateTitle);
 
   const validatePrice = () => {
     if (inputPrice.value > Setting.price.maxValue) {
-      inputPrice.reportValidity();
+      errorMessage = `Стоимость проживания должна быть не более ${Setting.price.maxValue}`;
     }
+    inputPrice.setCustomValidity(errorMessage);
   };
 
-  inputPrice.addEventListener(`input`, validatePrice);
-
   const validateRooms = () => {
-    optionsCapacity.forEach(function (option) {
+    optionsCapacity.forEach((option) => {
       const isShow = !(MAP_VALUE_MATCHING[roomsNumber.value].indexOf(option.value) >= 0);
       option.selected = MAP_VALUE_MATCHING[roomsNumber.value][0] === option.value;
       option.disabled = isShow;
@@ -91,7 +85,7 @@
   selectCheckOut.addEventListener(`change`, () => {
     changeCheckIn(selectCheckOut.value);
   });
-  roomsNumber.addEventListener(`change`, function () {
+  roomsNumber.addEventListener(`change`, () => {
     validateRooms();
   });
 
@@ -99,74 +93,25 @@
     setMinPrice(mapTypeToPrice[selectType.value]);
   });
 
-  const onLoad = () => {
-    window.mapinit.deactivate();
-    main.appendChild(successPopup);
-
-    document.addEventListener(`keydown`, onEscapeKeydown);
-    successPopup.addEventListener(`click`, onSuccessPopupClick);
-  };
-
-  const hideLoadSuccess = () => {
-    successPopup.remove();
-
-    document.removeEventListener(`keydown`, onEscapeKeydown);
-    document.removeEventListener(`click`, onErrorPopupClick);
-  };
-
-  const onError = () => {
-    main.appendChild(errorPopup);
-
-    document.addEventListener(`keydown`, onEscapeKeydown);
-    errorPopup.addEventListener(`click`, onErrorPopupClick);
-    errorPopupButton.addEventListener(`click`, onErrorPopupButtonClick);
-  };
-
-  const hideLoadError = () => {
-    errorPopup.remove();
-
-    document.removeEventListener(`keydown`, onEscapeKeydown);
-    document.removeEventListener(`click`, onErrorPopupClick);
-  };
-
-  const onEscapeKeydown = (evt) => {
-    if (isEscapeEvent(evt)) {
-      hideLoadSuccess();
-      hideLoadError();
-    }
-  };
-
-  const onSuccessPopupClick = (evt) => {
-    if (isMouseLeftButtonEvent(evt)
-      && evt.target === successPopup) {
-      hideLoadSuccess();
-    }
-  };
-
-  const onErrorPopupClick = (evt) => {
-    if (isMouseLeftButtonEvent(evt)
-      && evt.target === errorPopup) {
-      hideLoadError();
-    }
-  };
-
-  const onErrorPopupButtonClick = (evt) => {
-    if (isMouseLeftButtonEvent(evt)) {
-      hideLoadError();
-    }
-  };
-
   const onSubmitButtonClick = (evt) => {
     evt.preventDefault();
 
+    inputTitle.addEventListener(`invalid`, validateTitle);
+    inputPrice.addEventListener(`invalid`, validatePrice);
+
     window.backend.save(new FormData(addForm), onLoad, onError);
+    submitButton.removeEventListener(`click`, onSubmitButtonClick);
   };
 
   const onResetButtonClick = (evt) => {
     evt.preventDefault();
+
     window.mapinit.deactivate();
+    resetButton.removeEventListener(`click`, onResetButtonClick);
   };
 
+  inputTitle.addEventListener(`input`, validateTitle);
+  inputPrice.addEventListener(`input`, validatePrice);
   submitButton.addEventListener(`click`, onSubmitButtonClick);
   resetButton.addEventListener(`click`, onResetButtonClick);
 

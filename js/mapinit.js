@@ -19,7 +19,6 @@
     x: pinMain.style.left,
     y: pinMain.style.top
   };
-
   const AMOUNT = 5;
   let pins = [];
 
@@ -52,12 +51,7 @@
         pins.push(data[i]);
       }
     }
-    map.classList.remove(`map--faded`);
-    addForm.classList.remove(`ad-form--disabled`);
-
-    getAddress();
     renderPins(pins.slice(0, AMOUNT));
-    setDisableState();
   };
 
   const onError = (errorMessage) => {
@@ -77,6 +71,11 @@
   };
 
   const initialaze = () => {
+    map.classList.remove(`map--faded`);
+    addForm.classList.remove(`ad-form--disabled`);
+
+    getAddress();
+    setDisableState();
     window.backend.load(onLoad, onError);
   };
 
@@ -118,6 +117,9 @@
   pinMain.addEventListener(`keydown`, onMainPinKeysDown);
 
   window.mapinit = {
+    // updatePins: updatePins,
+    onLoad: onLoad,
+    pins: pins,
     initialaze: initialaze,
     deactivate: deactivate,
     getAddress: getAddress
