@@ -51,7 +51,7 @@
 
   const validatePrice = () => {
     if (inputPrice.value < inputPrice.min || inputPrice.value > inputPrice.max) {
-      errorMessage = `Стоимость проживания должна быть не менее ${inputPrice.min}`;
+      errorMessage = `Стоимость проживания должна быть не менее ${inputPrice.value}`;
     }
     inputPrice.setCustomValidity(errorMessage);
   };
