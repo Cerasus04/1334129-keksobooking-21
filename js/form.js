@@ -17,16 +17,6 @@
   const inputPrice = addForm.querySelector(`#price`);
   const submitButton = addForm.querySelector(`.ad-form__submit`);
   const resetButton = addForm.querySelector(`.ad-form__reset`);
-  let errorMessage = ``;
-  const Setting = {
-    title: {
-      minLength: 30,
-      maxLength: 100
-    },
-    price: {
-      maxValue: 1000000
-    }
-  };
 
   const mapTypeToPrice = {
     bungalow: 0,
@@ -40,20 +30,6 @@
     2: [`1`, `2`],
     3: [`1`, `2`, `3`],
     100: [`0`]
-  };
-
-  const validateTitle = () => {
-    const valueLength = inputTitle.value.length;
-    if (valueLength < Setting.title.minLength || valueLength > Setting.title.maxLength) {
-      errorMessage = `Минимальная длина заголовка объявления - ${Setting.title.minLength} символов, максимальная -  ${Setting.title.maxLength}`;
-    }
-  };
-
-  const validatePrice = () => {
-    if (inputPrice.value > Setting.price.maxValue) {
-      errorMessage = `Стоимость проживания должна быть не более ${Setting.price.maxValue}`;
-    }
-    inputPrice.setCustomValidity(errorMessage);
   };
 
   const validateRooms = () => {
@@ -94,13 +70,11 @@
   });
 
   const onSubmitButtonClick = (evt) => {
+    if (inputPrice.checkValidity() && inputTitle.checkValidity()) {
+      window.backend.save(new FormData(addForm), onLoad, onError);
+    }
     evt.preventDefault();
-
-    inputTitle.addEventListener(`invalid`, validateTitle);
-    inputPrice.addEventListener(`invalid`, validatePrice);
-
-    window.backend.save(new FormData(addForm), onLoad, onError);
-    submitButton.removeEventListener(`click`, onSubmitButtonClick);
+    submitButton.removeEventListener(`submit`, onSubmitButtonClick);
   };
 
   const onResetButtonClick = (evt) => {
@@ -110,9 +84,7 @@
     resetButton.removeEventListener(`click`, onResetButtonClick);
   };
 
-  inputTitle.addEventListener(`input`, validateTitle);
-  inputPrice.addEventListener(`input`, validatePrice);
-  submitButton.addEventListener(`click`, onSubmitButtonClick);
+  addForm.addEventListener(`submit`, onSubmitButtonClick);
   resetButton.addEventListener(`click`, onResetButtonClick);
 
   window.form = {

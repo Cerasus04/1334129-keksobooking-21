@@ -1,6 +1,8 @@
 'use strict';
 
 (function () {
+  const AMOUNT = 5;
+
   const isEnterEvent = window.util.isEnterEvent;
   const isMouseLeftButtonEvent = window.util.isMouseLeftButtonEvent;
   const SIZE_PIN = window.pin.SIZE_PIN;
@@ -10,8 +12,9 @@
   const addForm = window.form.addForm;
   const pinMain = window.form.pinMain;
   const removePins = window.pin.removePins;
-  const main = document.querySelector(`main`);
+  const load = window.backend.load;
 
+  const main = document.querySelector(`main`);
   const addressInput = addForm.querySelector(`#address`);
   const formFieldsets = document.querySelectorAll(`fieldset, select`);
 
@@ -19,7 +22,7 @@
     x: pinMain.style.left,
     y: pinMain.style.top
   };
-  const AMOUNT = 5;
+
   let pins = [];
 
   const getAddress = () => {
@@ -76,7 +79,7 @@
 
     getAddress();
     setDisableState();
-    window.backend.load(onLoad, onError);
+    load(onLoad, onError);
   };
 
   const setMainPinDefault = () => {
@@ -117,9 +120,11 @@
   pinMain.addEventListener(`keydown`, onMainPinKeysDown);
 
   window.mapinit = {
-    // updatePins: updatePins,
+    AMOUNT: AMOUNT,
     onLoad: onLoad,
-    pins: pins,
+    pins: () => {
+      return pins;
+    },
     initialaze: initialaze,
     deactivate: deactivate,
     getAddress: getAddress
