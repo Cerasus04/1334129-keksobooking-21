@@ -10,6 +10,7 @@
   const addForm = window.form.addForm;
   const pinMain = window.form.pinMain;
   const removePins = window.pin.removePins;
+  const load = window.backend.load;
   const main = document.querySelector(`main`);
 
   const addressInput = addForm.querySelector(`#address`);
@@ -52,6 +53,7 @@
       }
     }
     renderPins(pins.slice(0, AMOUNT));
+    // renderPins(pins.slice());
   };
 
   const onError = (errorMessage) => {
@@ -76,7 +78,7 @@
 
     getAddress();
     setDisableState();
-    window.backend.load(onLoad, onError);
+    load(onLoad, onError);
   };
 
   const setMainPinDefault = () => {

@@ -9,6 +9,12 @@
   const errorPopup = document.querySelector(`#error`).content.querySelector(`.error`);
   const errorPopupButton = errorPopup.querySelector(`.error__button`);
 
+  const onEscapeKeydown = (evt) => {
+    if (isEscapeEvent(evt)) {
+      hideLoadSuccess();
+      hideLoadError();
+    }
+  };
 
   const onLoad = () => {
     window.mapinit.deactivate();
@@ -41,12 +47,7 @@
     document.removeEventListener(`click`, onErrorPopupClick);
   };
 
-  const onEscapeKeydown = (evt) => {
-    if (isEscapeEvent(evt)) {
-      hideLoadSuccess();
-      hideLoadError();
-    }
-  };
+
 
   const onSuccessPopupClick = (evt) => {
     if (isMouseLeftButtonEvent(evt)
