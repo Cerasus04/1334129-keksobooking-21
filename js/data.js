@@ -1,15 +1,18 @@
 'use strict';
 
 (function () {
-  const isEscapeEvent = window.util.isEscapeEvent;
-  const isMouseLeftButtonEvent = window.util.isMouseLeftButtonEvent;
-  const map = document.querySelector(`.map`);
-  const mapFilters = map.querySelector(`.map__filters`);
-  const mapPins = map.querySelector(`.map__pins`);
   const IMG = {
     WIDTH: 45,
     HEIGHT: 40
   };
+
+  const isEscapeEvent = window.util.isEscapeEvent;
+  const isMouseLeftButtonEvent = window.util.isMouseLeftButtonEvent;
+
+  const map = document.querySelector(`.map`);
+  const mapFilters = map.querySelector(`.map__filters`);
+  const mapPins = map.querySelector(`.map__pins`);
+
   const typeRental = {
     'flat': `Квартира`,
     'bungalow': `Бунгало`,
@@ -87,16 +90,6 @@
     document.addEventListener(`keydown`, onCloseButtonKeyDown);
   };
 
-  const closePopup = () => {
-    let popup = map.querySelector(`.popup`);
-
-    if (popup) {
-      popup.remove();
-    }
-
-    document.removeEventListener(`keydown`, onCloseButtonKeyDown);
-  };
-
   const onCloseButtonKeyDown = (evt) => {
     if (isEscapeEvent(evt)) {
       closePopup();
@@ -107,6 +100,16 @@
     if (isMouseLeftButtonEvent(evt)) {
       closePopup();
     }
+  };
+
+  const closePopup = () => {
+    let popup = map.querySelector(`.popup`);
+
+    if (popup) {
+      popup.remove();
+    }
+
+    document.removeEventListener(`keydown`, onCloseButtonKeyDown);
   };
 
   window.data = {

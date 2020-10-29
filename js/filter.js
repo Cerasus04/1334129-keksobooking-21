@@ -1,25 +1,28 @@
 'use strict';
 
 (function () {
+  const AMOUNT = window.mapinit.AMOUNT;
+  const ANY_HOUSING = `any`;
+  const HIGH_PRICE = 50000;
+  const LOW_PRICE = 10000;
+
   const filtersForm = document.querySelector(`.map__filters`);
   const housingTypeFilterElement = filtersForm.querySelector(`#housing-type`);
   const housingPriceFilterElement = filtersForm.querySelector(`#housing-price`);
   const housingRoomsFilterElement = filtersForm.querySelector(`#housing-rooms`);
   const housingGuestsFilterElement = filtersForm.querySelector(`#housing-guests`);
   const housingFeatureFilterElement = filtersForm.querySelector(`#housing-features`);
-  const AMOUNT = window.mapinit.AMOUNT;
+
   const closePopup = window.data.closePopup;
   const renderPins = window.pin.renderPins;
-  const ANY_HOUSING = `any`;
-  const pins = window.mapinit.pins;
   const removePins = window.pin.removePins;
 
-  const HIGH_PRICE = 50000;
-  const LOW_PRICE = 10000;
-
   const filterHousingType = (data) => housingTypeFilterElement.value === data.offer.type || housingTypeFilterElement.value === ANY_HOUSING;
+
   const filterHousingRooms = (data) => housingRoomsFilterElement.value === data.offer.rooms.toString() || housingRoomsFilterElement.value === ANY_HOUSING;
+
   const filterHousingGuests = (data) => housingGuestsFilterElement.value === data.offer.guests.toString() || housingGuestsFilterElement.value === ANY_HOUSING;
+
   const filterHousingPrice = (data) => {
     return housingPriceFilterElement.value === ANY_HOUSING ||
       (housingPriceFilterElement.value === `low` && data.offer.price < LOW_PRICE) ||
@@ -32,25 +35,32 @@
     return checkListElements.every((checkedFeature) => data.offer.features.includes(checkedFeature.value));
   };
 
-  const filterData = () => {
+  const filterData = window.debounce(() => {
+    const pins = window.mapinit.pins();
     closePopup();
     removePins();
+
     let newPins = [];
+
     for (let i = 0; i < pins.length; i++) {
-      if (filterHousingType(pins[i]) &&
+      if (
+        filterHousingType(pins[i]) &&
         filterHousingPrice(pins[i]) &&
         filterHousingRooms(pins[i]) &&
         filterHousingGuests(pins[i]) &&
-        filterHousingFeatures(pins[i])) {
+        filterHousingFeatures(pins[i])
+      ) {
         newPins.push(pins[i]);
       }
+
+      if (newPins.length === AMOUNT) {
+        break;
+      }
     }
-    renderPins(newPins.slice(0, AMOUNT));
-  };
+
+    renderPins(newPins);
+  });
 
   filtersForm.addEventListener(`change`, filterData);
 
-  // window.filter = {
-  //   filterData: filterData
-  // };
 })();

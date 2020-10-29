@@ -11,33 +11,6 @@
     MARKER_HEIGHT: 22
   };
 
-  // const makePin = (item) => {
-  //   const pinTemplate = document.querySelector(`#pin`).content.querySelector(`.map__pin`);
-  //   const pin = pinTemplate.cloneNode(true);
-  //   const imgEl = pin.querySelector(`img`);
-  //   pin.style.left = `${item.location.x - SIZE_PIN.WIDTH / 2}px`;
-  //   pin.style.top = `${item.location.y - (SIZE_PIN.HEIGHT + SIZE_PIN.MARKER_HEIGHT)}px`;
-  //   imgEl.src = item.author.avatar;
-  //   imgEl.alt = item.offer.title;
-
-
-  //   pin.addEventListener(`click`, function (evt) {
-  //     setPinActiveClass((evt.target.tagName === `IMG`) ? evt.target.parentElement : evt.target);
-  //     closePopup();
-  //     createCard(item);
-  //   });
-
-  //   return pin;
-  // };
-
-  // const renderPins = (offers) => {
-  //   const fragment = document.createDocumentFragment();
-  //   for (let i = 0; i < offers.length; i++) {
-  //     fragment.appendChild(makePin(offers[i]));
-  //   }
-  //   mapPins.appendChild(fragment);
-  // };
-
   const makePin = (data) => {
     const pinTemplate = document.querySelector(`#pin`).content.querySelector(`.map__pin`);
     const pin = pinTemplate.cloneNode(true);
