@@ -1,30 +1,29 @@
 'use strict';
 
-(function () {
-  const MOUSE_LEFT_BUTTON = 0;
+const MOUSE_LEFT_BUTTON = 0;
 
-  const Keys = {
-    ESC: `Escape`,
-    ENTER: `Enter`,
-    NUMPUD_ENTER: `NumpudEnter`
-  };
+const Keys = {
+  ESC: `Escape`,
+  ENTER: `Enter`,
+  NUMPUD_ENTER: `NumpudEnter`
+};
 
-  const isEnterEvent = (evt) => {
-    return evt.code === Keys.ENTER
-      || evt.code === Keys.NUMPAD_ENTER;
-  };
+const isEnterEvent = (evt) => {
+  return evt.code === Keys.ENTER
+    || evt.code === Keys.NUMPAD_ENTER;
+};
 
-  const isMouseLeftButtonEvent = (evt) => {
-    return evt.button === MOUSE_LEFT_BUTTON;
-  };
+const isMouseLeftButtonEvent = (evt) => {
+  return evt.button === MOUSE_LEFT_BUTTON;
+};
 
-  const isEscapeEvent = (evt) => {
-    return evt.code === Keys.ESC;
-  };
+const isEscapeEvent = (evt) => {
+  return evt.code === Keys.ESC;
+};
 
-  window.util = {
-    isEnterEvent: isEnterEvent,
-    isEscapeEvent: isEscapeEvent,
-    isMouseLeftButtonEvent: isMouseLeftButtonEvent
-  };
-})();
+window.util = {
+  isEnterEvent: isEnterEvent,
+  isEscapeEvent: isEscapeEvent,
+  isMouseLeftButtonEvent: isMouseLeftButtonEvent
+};
+
