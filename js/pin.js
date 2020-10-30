@@ -1,14 +1,14 @@
 'use strict';
 
-const closePopup = window.data.closePopup;
-const createCard = window.data.createCard;
-const mapPins = window.data.mapPins;
-
 const SIZE_PIN = {
   WIDTH: 65,
   HEIGHT: 65,
   MARKER_HEIGHT: 22
 };
+
+const closePopup = window.data.closePopup;
+const createCard = window.data.createCard;
+const mapPins = window.data.mapPins;
 
 const makePin = (data) => {
   const pinTemplate = document.querySelector(`#pin`).content.querySelector(`.map__pin`);

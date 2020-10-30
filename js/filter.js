@@ -5,16 +5,16 @@ const ANY_HOUSING = `any`;
 const HIGH_PRICE = 50000;
 const LOW_PRICE = 10000;
 
+const closePopup = window.data.closePopup;
+const renderPins = window.pin.renderPins;
+const removePins = window.pin.removePins;
+
 const filtersForm = document.querySelector(`.map__filters`);
 const housingTypeFilterElement = filtersForm.querySelector(`#housing-type`);
 const housingPriceFilterElement = filtersForm.querySelector(`#housing-price`);
 const housingRoomsFilterElement = filtersForm.querySelector(`#housing-rooms`);
 const housingGuestsFilterElement = filtersForm.querySelector(`#housing-guests`);
 const housingFeatureFilterElement = filtersForm.querySelector(`#housing-features`);
-
-const closePopup = window.data.closePopup;
-const renderPins = window.pin.renderPins;
-const removePins = window.pin.removePins;
 
 const filterHousingType = (data) => housingTypeFilterElement.value === data.offer.type || housingTypeFilterElement.value === ANY_HOUSING;
 

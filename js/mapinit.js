@@ -8,10 +8,12 @@ const SIZE_PIN = window.pin.SIZE_PIN;
 const renderPins = window.pin.renderPins;
 const map = window.data.map;
 const closePopup = window.data.closePopup;
-const addForm = window.form.addForm;
+const addForm = window.load.addForm;
 const pinMain = window.form.pinMain;
 const removePins = window.pin.removePins;
 const load = window.backend.load;
+const setDisabledImg = window.load.setDisabledImg;
+const setEnabledImg = window.load.setEnabledImg;
 
 const main = document.querySelector(`main`);
 const addressInput = addForm.querySelector(`#address`);
@@ -78,6 +80,7 @@ const initialaze = () => {
 
   getAddress();
   setDisableState();
+  setEnabledImg();
   load(onLoad, onError);
 };
 
@@ -96,6 +99,7 @@ const deactivate = () => {
   setDisableState();
   removePins();
   closePopup();
+  setDisabledImg();
   pinMain.addEventListener(`mousedown`, onMainPinMouseDown);
 };
 

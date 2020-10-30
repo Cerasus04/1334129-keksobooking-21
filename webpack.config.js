@@ -1,6 +1,7 @@
 const path = require("path");
 module.exports = {
   entry: [
+    "./js/load.js",
     "./js/backend.js",
     "./js/debounce.js",
     "./js/util.js",

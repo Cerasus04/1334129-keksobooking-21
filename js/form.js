@@ -1,11 +1,25 @@
 'use strict';
 
+const MAP_VALUE_MATCHING = {
+  1: [`1`],
+  2: [`1`, `2`],
+  3: [`1`, `2`, `3`],
+  100: [`0`]
+};
+
+const mapTypeToPrice = {
+  bungalow: 0,
+  flat: 1000,
+  house: 5000,
+  palace: 10000,
+};
+
 const mapPins = window.data.mapPins;
 const onLoad = window.message.onLoad;
 const onError = window.message.onError;
 
 const pinMain = mapPins.querySelector(`.map__pin--main`);
-const addForm = document.querySelector(`.ad-form`);
+const addForm = window.load.addForm;
 const roomsNumber = addForm.querySelector(`#room_number`);
 const selectType = addForm.querySelector(`#type`);
 const guestsNumber = addForm.querySelector(`#capacity`);
@@ -17,19 +31,9 @@ const inputPrice = addForm.querySelector(`#price`);
 const submitButton = addForm.querySelector(`.ad-form__submit`);
 const resetButton = addForm.querySelector(`.ad-form__reset`);
 
-const mapTypeToPrice = {
-  bungalow: 0,
-  flat: 1000,
-  house: 5000,
-  palace: 10000,
-};
 
-const MAP_VALUE_MATCHING = {
-  1: [`1`],
-  2: [`1`, `2`],
-  3: [`1`, `2`, `3`],
-  100: [`0`]
-};
+
+
 
 const validateRooms = () => {
   optionsCapacity.forEach((option) => {
