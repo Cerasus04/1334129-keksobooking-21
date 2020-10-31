@@ -1,10 +1,10 @@
 'use strict';
 
 const AMOUNT = 5;
+const SIZE_PIN = window.pin.SIZE_PIN;
 
 const isEnterEvent = window.util.isEnterEvent;
 const isMouseLeftButtonEvent = window.util.isMouseLeftButtonEvent;
-const SIZE_PIN = window.pin.SIZE_PIN;
 const renderPins = window.pin.renderPins;
 const map = window.data.map;
 const closePopup = window.data.closePopup;

@@ -32,6 +32,18 @@ const numDecline = (number, words) => {
   return words[2];
 };
 
+const validationField = (obj) => {
+  const isData = obj.data.every((value) => {
+    return value;
+  });
+
+  if (isData) {
+    obj.cb();
+  } else {
+    obj.field.classList.add(`hidden`);
+  }
+};
+
 const createFragmentObj = (obj) => {
   const fragmentFeatures = document.createDocumentFragment();
   for (let i = 0; i < obj.length; i++) {
@@ -64,22 +76,98 @@ const createCard = (obj) => {
   const guestNum = obj.offer.guests;
   map.insertBefore(cardItem, mapPins);
 
-  cardItem.querySelector(`.popup__title`).textContent = obj.offer.title;
-  cardItem.querySelector(`.popup__text--address`).textContent = obj.offer.address;
-  cardItem.querySelector(`.popup__text--price`).innerHTML = `${obj.offer.price} &#x20bd/ночь`;
-  cardItem.querySelector(`.popup__type`).textContent = typeRental[obj.offer.type];
-  cardItem.querySelector(`.popup__text--capacity`).textContent = `${roomNum}${numDecline(roomNum, [` комната `, ` комнаты `, ` комнат `])} для ${guestNum}${numDecline(guestNum, [` гостя `, ` гостей `, ` гостей `])}`;
-  cardItem.querySelector(`.popup__text--time`).textContent = `Заезд после ${obj.offer.checkin} выезд после ${obj.offer.checkout}`;
-  cardItem.querySelector(`.popup__description`).textContent = obj.offer.description;
-  cardItem.querySelector(`.popup__avatar`).src = obj.author.avatar;
+  let cardTitle = cardItem.querySelector(`.popup__title`);
+  let cardAddress = cardItem.querySelector(`.popup__text--address`);
+  let cardPrice = cardItem.querySelector(`.popup__text--price`);
+  let cardCapacity = cardItem.querySelector(`.popup__text--capacity`);
+  let cardTime = cardItem.querySelector(`.popup__text--time`);
+  let cardFeatures = cardItem.querySelector(`.popup__features`);
+  let cardDescription = cardItem.querySelector(`.popup__description`);
+  let cardAvatar = cardItem.querySelector(`.popup__avatar`);
+  let cardType = cardItem.querySelector(`.popup__type`);
+  let cardPhotos = cardItem.querySelector(`.popup__photos`);
 
-  const cardFeatures = cardItem.querySelector(`.popup__features`);
-  cardFeatures.innerHTML = ``;
-  cardFeatures.appendChild(createFragmentObj(obj.offer.features));
+  validationField({
+    field: cardTitle,
+    data: [obj.offer.title],
+    cb() {
+      cardTitle.textContent = obj.offer.title;
+    }
+  });
 
-  const cardPhotos = cardItem.querySelector(`.popup__photos`);
-  cardPhotos.innerHTML = ``;
-  cardPhotos.appendChild(createFragmentPhotos(obj.offer.photos));
+  validationField({
+    field: cardAddress,
+    data: [obj.offer.address],
+    cb() {
+      cardAddress.innerHTML = obj.offer.address;
+    }
+  });
+
+  validationField({
+    field: cardPrice,
+    data: [obj.offer.price],
+    cb() {
+      cardPrice.innerHTML = `${obj.offer.price} &#x20bd/ночь`;
+    }
+  });
+
+  validationField({
+    field: cardCapacity,
+    data: [roomNum, roomNum],
+    cb() {
+      cardCapacity.textContent = `${roomNum}${numDecline(roomNum, [` комната `, ` комнаты `, ` комнат `])} для ${guestNum}${numDecline(guestNum, [` гостя `, ` гостей `, ` гостей `])}`;
+    }
+  });
+
+  validationField({
+    field: cardTime,
+    data: [obj.offer.checkin, obj.offer.checkout],
+    cb() {
+      cardTime.textContent = `Заезд после ${obj.offer.checkin}, выезд до ${obj.offer.checkout}`;
+    }
+  });
+
+  validationField({
+    field: cardDescription,
+    data: [obj.offer.description],
+    cb() {
+      cardDescription.textContent = obj.offer.description;
+    }
+  });
+
+  validationField({
+    field: cardAvatar,
+    data: [obj.author.avatar],
+    cb() {
+      cardAvatar.src = obj.author.avatar;
+    }
+  });
+
+  validationField({
+    field: cardType,
+    data: [obj.offer.type],
+    cb() {
+      cardType.textContent = typeRental[obj.offer.type];
+    }
+  });
+
+  validationField({
+    field: cardFeatures,
+    data: [obj.offer.features],
+    cb() {
+      cardFeatures.innerHTML = ``;
+      cardFeatures.appendChild(createFragmentObj(obj.offer.features));
+    }
+  });
+
+  validationField({
+    field: cardPhotos,
+    data: [obj.offer.photos],
+    cb() {
+      cardPhotos.innerHTML = ``;
+      cardPhotos.appendChild(createFragmentPhotos(obj.offer.photos));
+    }
+  });
 
   mapFilters.insertBefore(cardItem, null);
 
