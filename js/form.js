@@ -31,10 +31,6 @@ const inputPrice = addForm.querySelector(`#price`);
 const submitButton = addForm.querySelector(`.ad-form__submit`);
 const resetButton = addForm.querySelector(`.ad-form__reset`);
 
-
-
-
-
 const validateRooms = () => {
   optionsCapacity.forEach((option) => {
     const isShow = !(MAP_VALUE_MATCHING[roomsNumber.value].indexOf(option.value) >= 0);
