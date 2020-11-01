@@ -10,11 +10,11 @@ const StatusCode = {
   SERVER_ERROR: 500
 };
 
-const getXhrData = function (onLoad, onError) {
+const getXhrData = (onLoad, onError) => {
   const xhr = new XMLHttpRequest();
   xhr.responseType = `json`;
 
-  xhr.addEventListener(`load`, function () {
+  xhr.addEventListener(`load`, () => {
     let error;
     switch (xhr.status) {
       case StatusCode.OK:
@@ -37,12 +37,12 @@ const getXhrData = function (onLoad, onError) {
     }
   });
 
-  xhr.addEventListener(`error`, function () {
+  xhr.addEventListener(`error`, () => {
     onError(`Произошла ошибка соединения`);
   });
 
   xhr.timeout = TIMEOUT;
-  xhr.addEventListener(`timeout`, function () {
+  xhr.addEventListener(`timeout`, () => {
     onError(`Запрос не успел выполниться за ` + xhr.timeout + `мс`);
   });
 

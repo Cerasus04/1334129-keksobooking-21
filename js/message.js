@@ -39,7 +39,7 @@ const onErrorPopupButtonClick = (evt) => {
   }
 };
 const onLoad = () => {
-  window.mapinit.deactivate();
+  window.mapinit.setPageDeactivateState();
   main.appendChild(successPopup);
 
   document.addEventListener(`keydown`, onSuccessEscapeKeydown);

@@ -12,7 +12,7 @@ const map = document.querySelector(`.map`);
 const mapFilters = map.querySelector(`.map__filters`);
 const mapPins = map.querySelector(`.map__pins`);
 
-const typeRental = {
+const TypeRental = {
   'flat': `Квартира`,
   'bungalow': `Бунгало`,
   'house': `Дом`,
@@ -76,16 +76,16 @@ const createCard = (obj) => {
   const guestNum = obj.offer.guests;
   map.insertBefore(cardItem, mapPins);
 
-  let cardTitle = cardItem.querySelector(`.popup__title`);
-  let cardAddress = cardItem.querySelector(`.popup__text--address`);
-  let cardPrice = cardItem.querySelector(`.popup__text--price`);
-  let cardCapacity = cardItem.querySelector(`.popup__text--capacity`);
-  let cardTime = cardItem.querySelector(`.popup__text--time`);
-  let cardFeatures = cardItem.querySelector(`.popup__features`);
-  let cardDescription = cardItem.querySelector(`.popup__description`);
-  let cardAvatar = cardItem.querySelector(`.popup__avatar`);
-  let cardType = cardItem.querySelector(`.popup__type`);
-  let cardPhotos = cardItem.querySelector(`.popup__photos`);
+  const cardTitle = cardItem.querySelector(`.popup__title`);
+  const cardAddress = cardItem.querySelector(`.popup__text--address`);
+  const cardPrice = cardItem.querySelector(`.popup__text--price`);
+  const cardCapacity = cardItem.querySelector(`.popup__text--capacity`);
+  const cardTime = cardItem.querySelector(`.popup__text--time`);
+  const cardFeatures = cardItem.querySelector(`.popup__features`);
+  const cardDescription = cardItem.querySelector(`.popup__description`);
+  const cardAvatar = cardItem.querySelector(`.popup__avatar`);
+  const cardType = cardItem.querySelector(`.popup__type`);
+  const cardPhotos = cardItem.querySelector(`.popup__photos`);
 
   validationField({
     field: cardTitle,
@@ -147,7 +147,7 @@ const createCard = (obj) => {
     field: cardType,
     data: [obj.offer.type],
     cb() {
-      cardType.textContent = typeRental[obj.offer.type];
+      cardType.textContent = TypeRental[obj.offer.type];
     }
   });
 
@@ -171,7 +171,7 @@ const createCard = (obj) => {
 
   mapFilters.insertBefore(cardItem, null);
 
-  let closeButton = cardItem.querySelector(`.popup__close`);
+  const closeButton = cardItem.querySelector(`.popup__close`);
 
   closeButton.addEventListener(`click`, onCloseButtonClick);
   document.addEventListener(`keydown`, onCloseButtonKeyDown);
@@ -190,7 +190,7 @@ const onCloseButtonClick = (evt) => {
 };
 
 const closePopup = () => {
-  let popup = map.querySelector(`.popup`);
+  const popup = map.querySelector(`.popup`);
 
   if (popup) {
     popup.remove();

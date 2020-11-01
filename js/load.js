@@ -3,7 +3,7 @@
 const FILE_TYPES = [`gif`, `jpg`, `jpeg`, `png`];
 const DEFAULT_AVATAR_SRC = `img/muffin-grey.svg`;
 
-const stylesToPreview = {
+const StylesToPreview = {
   avatar: {
     default: {
       width: `40px`,
@@ -46,7 +46,7 @@ const fileChooser = (file, onCheckPassed) => {
 };
 
 const loadAvatar = (fileName) => {
-  const editedStyle = stylesToPreview.avatar.edited;
+  const editedStyle = StylesToPreview.avatar.edited;
 
   const onAvatarLoad = () => {
     URL.revokeObjectURL(avatarPreview.src);
@@ -64,7 +64,7 @@ const loadAvatar = (fileName) => {
 
 const loadImage = (fileName) => {
   const imageElement = document.createElement(`img`);
-  const editedStyle = stylesToPreview.avatar.edited;
+  const editedStyle = StylesToPreview.avatar.edited;
 
   const onImageLoad = () => {
     URL.revokeObjectURL(imageElement.src);
@@ -96,7 +96,7 @@ const setEnabledImg = () => {
 };
 
 const setDisabledImg = () => {
-  const defaultStyle = stylesToPreview.avatar.default;
+  const defaultStyle = StylesToPreview.avatar.default;
 
   avatarPreview.style.width = defaultStyle.width;
   avatarPreview.style.height = defaultStyle.height;

@@ -42,12 +42,12 @@ const getAddress = () => {
 
 getAddress();
 
-const setDisableState = () => {
+const setFormDisableState = () => {
   formFieldsets.forEach((item) => {
     item.disabled = !item.disabled;
   });
 };
-setDisableState();
+setFormDisableState();
 
 const onLoad = (data) => {
   for (let i = 0; i < data.length; i++) {
@@ -74,12 +74,12 @@ const onError = (errorMessage) => {
   main.prepend(fragment);
 };
 
-const initialaze = () => {
+const setPageInitializationState = () => {
   map.classList.remove(`map--faded`);
   addForm.classList.remove(`ad-form--disabled`);
 
   getAddress();
-  setDisableState();
+  setFormDisableState();
   setEnabledImg();
   load(onLoad, onError);
 };
@@ -89,14 +89,14 @@ const setMainPinDefault = () => {
   pinMain.style.top = defaultMainPin.y;
 };
 
-const deactivate = () => {
+const setPageDeactivateState = () => {
   map.classList.add(`map--faded`);
   addForm.classList.add(`ad-form--disabled`);
 
   addForm.reset();
   setMainPinDefault();
   getAddress();
-  setDisableState();
+  setFormDisableState();
   removePins();
   closePopup();
   setDisabledImg();
@@ -105,7 +105,7 @@ const deactivate = () => {
 
 const onMainPinMouseDown = (evt) => {
   if (isMouseLeftButtonEvent(evt)) {
-    initialaze();
+    setPageInitializationState();
 
     pinMain.removeEventListener(`mousedown`, onMainPinMouseDown);
   }
@@ -113,7 +113,7 @@ const onMainPinMouseDown = (evt) => {
 
 const onMainPinKeysDown = (evt) => {
   if (isEnterEvent(evt)) {
-    initialaze();
+    setPageInitializationState();
 
     pinMain.removeEventListener(`keydown`, onMainPinKeysDown);
   }
@@ -128,8 +128,8 @@ window.mapinit = {
   pins: () => {
     return pins;
   },
-  initialaze: initialaze,
-  deactivate: deactivate,
+  setPageInitializationState: setPageInitializationState,
+  setPageDeactivateState: setPageDeactivateState,
   getAddress: getAddress
 };
 

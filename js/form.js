@@ -7,7 +7,7 @@ const MAP_VALUE_MATCHING = {
   100: [`0`]
 };
 
-const mapTypeToPrice = {
+const MapTypeToPrice = {
   bungalow: 0,
   flat: 1000,
   house: 5000,
@@ -65,7 +65,7 @@ roomsNumber.addEventListener(`change`, () => {
 });
 
 selectType.addEventListener(`change`, () => {
-  setMinPrice(mapTypeToPrice[selectType.value]);
+  setMinPrice(MapTypeToPrice[selectType.value]);
 });
 
 const onSubmitButtonClick = (evt) => {
@@ -79,7 +79,7 @@ const onSubmitButtonClick = (evt) => {
 const onResetButtonClick = (evt) => {
   evt.preventDefault();
 
-  window.mapinit.deactivate();
+  window.mapinit.setPageDeactivateState();
   resetButton.removeEventListener(`click`, onResetButtonClick);
 };
 
