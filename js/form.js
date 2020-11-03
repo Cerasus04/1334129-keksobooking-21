@@ -14,7 +14,7 @@ const MapTypeToPrice = {
   palace: 10000,
 };
 
-const mapPins = window.data.mapPins;
+const mapPins = window.card.mapPins;
 const onLoad = window.message.onLoad;
 const onError = window.message.onError;
 
@@ -80,7 +80,6 @@ const onResetButtonClick = (evt) => {
   evt.preventDefault();
 
   window.mapinit.setPageDeactivateState();
-  resetButton.removeEventListener(`click`, onResetButtonClick);
 };
 
 addForm.addEventListener(`submit`, onSubmitButtonClick);

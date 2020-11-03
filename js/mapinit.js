@@ -6,14 +6,15 @@ const SIZE_PIN = window.pin.SIZE_PIN;
 const isEnterEvent = window.util.isEnterEvent;
 const isMouseLeftButtonEvent = window.util.isMouseLeftButtonEvent;
 const renderPins = window.pin.renderPins;
-const map = window.data.map;
-const closePopup = window.data.closePopup;
+const map = window.card.map;
+const closePopup = window.card.closePopup;
 const addForm = window.load.addForm;
 const pinMain = window.form.pinMain;
 const removePins = window.pin.removePins;
 const load = window.backend.load;
 const setDisabledImg = window.load.setDisabledImg;
 const setEnabledImg = window.load.setEnabledImg;
+const mapFilters = window.card.mapFilters;
 
 const main = document.querySelector(`main`);
 const addressInput = addForm.querySelector(`#address`);
@@ -93,6 +94,7 @@ const setPageDeactivateState = () => {
   map.classList.add(`map--faded`);
   addForm.classList.add(`ad-form--disabled`);
 
+  mapFilters.reset();
   addForm.reset();
   setMainPinDefault();
   getAddress();

@@ -74,7 +74,7 @@ const loadImage = (fileName) => {
   imageElement.addEventListener(`load`, onImageLoad);
   imageElement.src = URL.createObjectURL(fileName);
 
-  imageContainer.innerHTML = ``;
+  imageContainer.textContent = ``;
   imageElement.style.width = editedStyle.width;
   imageElement.style.height = editedStyle.height;
   imageElement.style.borderRadius = editedStyle.borderRadius;
@@ -104,7 +104,7 @@ const setDisabledImg = () => {
   avatarPreview.style.marginLeft = defaultStyle.marginLeft;
   avatarPreview.src = DEFAULT_AVATAR_SRC;
 
-  imageContainer.innerHTML = ``;
+  imageContainer.textContent = ``;
 
   avatarFileName.removeEventListener(`change`, onAvatarFileNameChange);
   imagesFileName.removeEventListener(`change`, onImagesFileNameChange);

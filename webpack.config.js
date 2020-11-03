@@ -5,7 +5,7 @@ module.exports = {
     "./js/backend.js",
     "./js/debounce.js",
     "./js/util.js",
-    "./js/data.js",
+    "./js/card.js",
     "./js/pin.js",
     "./js/message.js",
     "./js/form.js",

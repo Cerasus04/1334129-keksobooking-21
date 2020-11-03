@@ -32,18 +32,6 @@ const numDecline = (number, words) => {
   return words[2];
 };
 
-const validationField = (obj) => {
-  const isData = obj.data.every((value) => {
-    return value;
-  });
-
-  if (isData) {
-    obj.cb();
-  } else {
-    obj.field.classList.add(`hidden`);
-  }
-};
-
 const createFragmentObj = (obj) => {
   const fragmentFeatures = document.createDocumentFragment();
   for (let i = 0; i < obj.length; i++) {
@@ -69,6 +57,10 @@ const createFragmentPhotos = (pins) => {
   return fragmentPhotos;
 };
 
+const hideElement = (element) => {
+  element.classList.add(`hidden`);
+};
+
 const createCard = (obj) => {
   const cardTemplate = document.querySelector(`#card`).content.querySelector(`.map__card`);
   const cardItem = cardTemplate.cloneNode(true);
@@ -87,87 +79,67 @@ const createCard = (obj) => {
   const cardType = cardItem.querySelector(`.popup__type`);
   const cardPhotos = cardItem.querySelector(`.popup__photos`);
 
-  validationField({
-    field: cardTitle,
-    data: [obj.offer.title],
-    cb() {
-      cardTitle.textContent = obj.offer.title;
-    }
-  });
+  if (obj.offer.title) {
+    cardTitle.textContent = obj.offer.title;
+  } else {
+    hideElement(cardTitle);
+  }
 
-  validationField({
-    field: cardAddress,
-    data: [obj.offer.address],
-    cb() {
-      cardAddress.innerHTML = obj.offer.address;
-    }
-  });
+  if (obj.offer.price) {
+    cardPrice.textContent = `${obj.offer.price} ₽/ночь`;
+  } else {
+    hideElement(cardPrice);
+  }
 
-  validationField({
-    field: cardPrice,
-    data: [obj.offer.price],
-    cb() {
-      cardPrice.innerHTML = `${obj.offer.price} &#x20bd/ночь`;
-    }
-  });
+  if (obj.offer.address) {
+    cardAddress.textContent = obj.offer.address;
+  } else {
+    hideElement(cardAddress);
+  }
 
-  validationField({
-    field: cardCapacity,
-    data: [roomNum, roomNum],
-    cb() {
-      cardCapacity.textContent = `${roomNum}${numDecline(roomNum, [` комната `, ` комнаты `, ` комнат `])} для ${guestNum}${numDecline(guestNum, [` гостя `, ` гостей `, ` гостей `])}`;
-    }
-  });
+  if (obj.offer.type) {
+    cardType.textContent = TypeRental[obj.offer.type];
+  } else {
+    hideElement(cardType);
+  }
 
-  validationField({
-    field: cardTime,
-    data: [obj.offer.checkin, obj.offer.checkout],
-    cb() {
-      cardTime.textContent = `Заезд после ${obj.offer.checkin}, выезд до ${obj.offer.checkout}`;
-    }
-  });
+  if (obj.offer.rooms || obj.offer.guests) {
+    cardCapacity.textContent = `${roomNum}${numDecline(roomNum, [` комната `, ` комнаты `, ` комнат `])} для ${guestNum}${numDecline(guestNum, [` гостя `, ` гостей `, ` гостей `])}`;
+  } else {
+    hideElement(cardCapacity);
+  }
 
-  validationField({
-    field: cardDescription,
-    data: [obj.offer.description],
-    cb() {
-      cardDescription.textContent = obj.offer.description;
-    }
-  });
+  if (obj.offer.checkin || obj.offer.checkout) {
+    cardTime.textContent = `Заезд после ${obj.offer.checkin} выезд после ${obj.offer.checkout}`;
+  } else {
+    hideElement(cardTime);
+  }
 
-  validationField({
-    field: cardAvatar,
-    data: [obj.author.avatar],
-    cb() {
-      cardAvatar.src = obj.author.avatar;
-    }
-  });
+  if (obj.offer.description) {
+    cardDescription.textContent = obj.offer.description;
+  } else {
+    hideElement(cardDescription);
+  }
 
-  validationField({
-    field: cardType,
-    data: [obj.offer.type],
-    cb() {
-      cardType.textContent = TypeRental[obj.offer.type];
-    }
-  });
+  if (obj.author.avatar) {
+    cardAvatar.src = obj.author.avatar;
+  } else {
+    hideElement(cardAvatar);
+  }
 
-  validationField({
-    field: cardFeatures,
-    data: [obj.offer.features],
-    cb() {
-      cardFeatures.innerHTML = ``;
-      cardFeatures.appendChild(createFragmentObj(obj.offer.features));
-    }
-  });
+  if (obj.offer.features) {
+    cardFeatures.textContent = ``;
+    cardFeatures.appendChild(createFragmentObj(obj.offer.features));
+  } else {
+    hideElement(cardFeatures);
+  }
 
-  validationField({
-    field: cardPhotos,
-    data: [obj.offer.photos],
-    cb() {
-      cardPhotos.innerHTML = ``;
-      cardPhotos.appendChild(createFragmentPhotos(obj.offer.photos));
-    }
-  });
+  if (obj.offer.photos) {
+    cardPhotos.textContent = ``;
+    cardPhotos.appendChild(createFragmentPhotos(obj.offer.photos));
+  } else {
+    hideElement(cardPhotos);
+  }
 
   mapFilters.insertBefore(cardItem, null);
 
@@ -196,10 +168,15 @@ const closePopup = () => {
     popup.remove();
   }
 
+  let pins = mapPins.querySelectorAll(`.map__pin`);
+  for (let i = 0; i < pins.length; i++) {
+    pins[i].classList.remove(`map__pin--active`);
+  }
+
   document.removeEventListener(`keydown`, onCloseButtonKeyDown);
 };
 
-window.data = {
+window.card = {
   map: map,
   mapFilters: mapFilters,
   mapPins: mapPins,
