@@ -5,7 +5,7 @@ const MOUSE_LEFT_BUTTON = 0;
 const Keys = {
   ESC: `Escape`,
   ENTER: `Enter`,
-  NUMPUD_ENTER: `NumpudEnter`
+  NUMPAD_ENTER: `NumpadEnter`
 };
 
 const isEnterEvent = (evt) => {

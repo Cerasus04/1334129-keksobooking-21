@@ -6,9 +6,9 @@ const SIZE_PIN = {
   MARKER_HEIGHT: 22
 };
 
-const closePopup = window.data.closePopup;
-const createCard = window.data.createCard;
-const mapPins = window.data.mapPins;
+const closePopup = window.card.closePopup;
+const createCard = window.card.createCard;
+const mapPins = window.card.mapPins;
 
 const makePin = (data) => {
   const pinTemplate = document.querySelector(`#pin`).content.querySelector(`.map__pin`);

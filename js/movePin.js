@@ -6,7 +6,7 @@ const PIN_Y_GAP = SIZE_PIN.HEIGHT + SIZE_PIN.MARKER_HEIGHT;
 
 const isMouseLeftButtonEvent = window.util.isMouseLeftButtonEvent;
 const getAddress = window.mapinit.getAddress;
-const initialaze = window.mapinit.initialaze;
+const setPageInitializationState = window.mapinit.setPageInitializationState;
 const map = document.querySelector(`.map`);
 const mapPins = map.querySelector(`.map__pins`);
 const pinMain = mapPins.querySelector(`.map__pin--main`);
@@ -60,7 +60,7 @@ const onMouseDown = function (evt) {
     };
 
     if (isMouseLeftButtonEvent(evt) && map.classList.contains(`.map--faded`)) {
-      initialaze();
+      setPageInitializationState();
     }
 
     correctCoordinates(shift);
