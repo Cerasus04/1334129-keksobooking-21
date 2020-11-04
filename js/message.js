@@ -70,7 +70,7 @@ const hideLoadError = () => {
 };
 
 window.message = {
-  onLoad: onLoad,
-  onError: onError
+  onLoad,
+  onError
 };
 

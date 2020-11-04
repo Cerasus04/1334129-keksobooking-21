@@ -64,7 +64,7 @@ const save = (data, onLoad, onError) => {
 };
 
 window.backend = {
-  load: load,
-  save: save
+  load,
+  save
 };
 

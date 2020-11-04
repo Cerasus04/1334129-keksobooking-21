@@ -86,7 +86,7 @@ addForm.addEventListener(`submit`, onSubmitButtonClick);
 resetButton.addEventListener(`click`, onResetButtonClick);
 
 window.form = {
-  addForm: addForm,
-  pinMain: pinMain
+  addForm,
+  pinMain
 };
 

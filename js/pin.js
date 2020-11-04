@@ -54,7 +54,7 @@ const setPinActiveClass = (button) => {
 };
 
 window.pin = {
-  SIZE_PIN: SIZE_PIN,
-  renderPins: renderPins,
-  removePins: removePins
+  SIZE_PIN,
+  renderPins,
+  removePins
 };

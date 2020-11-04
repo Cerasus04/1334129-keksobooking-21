@@ -125,13 +125,13 @@ pinMain.addEventListener(`mousedown`, onMainPinMouseDown);
 pinMain.addEventListener(`keydown`, onMainPinKeysDown);
 
 window.mapinit = {
-  AMOUNT: AMOUNT,
-  onLoad: onLoad,
+  AMOUNT,
+  onLoad,
   pins: () => {
     return pins;
   },
-  setPageInitializationState: setPageInitializationState,
-  setPageDeactivateState: setPageDeactivateState,
-  getAddress: getAddress
+  setPageInitializationState,
+  setPageDeactivateState,
+  getAddress
 };
 

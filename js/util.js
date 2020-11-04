@@ -22,8 +22,8 @@ const isEscapeEvent = (evt) => {
 };
 
 window.util = {
-  isEnterEvent: isEnterEvent,
-  isEscapeEvent: isEscapeEvent,
-  isMouseLeftButtonEvent: isMouseLeftButtonEvent
+  isEnterEvent,
+  isEscapeEvent,
+  isMouseLeftButtonEvent
 };
 

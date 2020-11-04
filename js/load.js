@@ -111,7 +111,7 @@ const setDisabledImg = () => {
 };
 
 window.load = {
-  addForm: addForm,
-  setDisabledImg: setDisabledImg,
-  setEnabledImg: setEnabledImg,
+  addForm,
+  setDisabledImg,
+  setEnabledImg
 };
