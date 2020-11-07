@@ -8,18 +8,21 @@ const Keys = {
   NUMPAD_ENTER: `NumpadEnter`
 };
 
-const isEnterEvent = (evt) => {
-  return evt.code === Keys.ENTER
-    || evt.code === Keys.NUMPAD_ENTER;
-};
+// const isEnterEvent = (evt) => {
+//   return evt.code === Keys.ENTER
+//     || evt.code === Keys.NUMPAD_ENTER;
+// };
+const isEnterEvent = (evt) => evt.code === Keys.ENTER || evt.code === Keys.NUMPAD_ENTER;
 
-const isMouseLeftButtonEvent = (evt) => {
-  return evt.button === MOUSE_LEFT_BUTTON;
-};
+// const isMouseLeftButtonEvent = (evt) => {
+//   return evt.button === MOUSE_LEFT_BUTTON;
+// };
+const isMouseLeftButtonEvent = (evt) => evt.button === MOUSE_LEFT_BUTTON;
 
-const isEscapeEvent = (evt) => {
-  return evt.code === Keys.ESC;
-};
+// const isEscapeEvent = (evt) => {
+//   return evt.code === Keys.ESC;
+// };
+const isEscapeEvent = (evt) => evt.code === Keys.ESC;
 
 window.util = {
   isEnterEvent,

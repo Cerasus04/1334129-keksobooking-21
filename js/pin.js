@@ -3,11 +3,11 @@
 const SIZE_PIN = {
   WIDTH: 65,
   HEIGHT: 65,
-  MARKER_HEIGHT: 22
+  MARKER_HEIGHT: 10
 };
 
 const closePopup = window.card.closePopup;
-const createCard = window.card.createCard;
+const createCard = window.card.create;
 const mapPins = window.card.mapPins;
 
 const makePin = (data) => {
@@ -19,7 +19,7 @@ const makePin = (data) => {
   imgEl.src = data.author.avatar;
   imgEl.alt = data.offer.title;
 
-  pin.addEventListener(`click`, function (evt) {
+  pin.addEventListener(`click`, (evt) => {
     setPinActiveClass((evt.target.tagName === `IMG`) ? evt.target.parentElement : evt.target);
     closePopup();
     createCard(data);
@@ -30,6 +30,10 @@ const makePin = (data) => {
 
 const renderPins = (offers) => {
   const fragment = document.createDocumentFragment();
+
+  // offers.forEach((item) => {
+  //   fragment.appendChild(makePin(offers[item]));
+  // });
   for (let i = 0; i < offers.length; i++) {
     fragment.appendChild(makePin(offers[i]));
   }

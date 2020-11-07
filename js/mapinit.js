@@ -51,11 +51,12 @@ const setFormDisableState = () => {
 setFormDisableState();
 
 const onLoad = (data) => {
-  for (let i = 0; i < data.length; i++) {
-    if (data[i].offer) {
-      pins.push(data[i]);
-    }
-  }
+  // for (let i = 0; i < data.length; i++) {
+  //   if (data[i].offer) {
+  //     pins.push(data[i]);
+  //   }
+  // }
+  data.forEach((item) => item.offer && pins.push(item));
   renderPins(pins.slice(0, AMOUNT));
 };
 

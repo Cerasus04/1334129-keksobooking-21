@@ -7,12 +7,12 @@ const PIN_Y_GAP = SIZE_PIN.HEIGHT + SIZE_PIN.MARKER_HEIGHT;
 const isMouseLeftButtonEvent = window.util.isMouseLeftButtonEvent;
 const getAddress = window.mapinit.getAddress;
 const setPageInitializationState = window.mapinit.setPageInitializationState;
-const map = document.querySelector(`.map`);
-const mapPins = map.querySelector(`.map__pins`);
-const pinMain = mapPins.querySelector(`.map__pin--main`);
+const map = window.card.map;
+const mapPins = window.card.mapPins;
+const pinMain = window.form.pinMain;
 
 const restrictionCoords = {
-  minX: 1,
+  minX: 0,
   maxX: mapPins.offsetWidth,
   minY: 130,
   maxY: 630
@@ -34,11 +34,11 @@ const correctCoordinates = (shift) => {
     y = restrictionCoords.maxY - PIN_Y_GAP;
   }
 
-  pinMain.style.top = y + `px`;
-  pinMain.style.left = x + `px`;
+  pinMain.style.top = `${y}px`;
+  pinMain.style.left = `${x}px`;
 };
 
-const onMouseDown = function (evt) {
+const onMouseDown = (evt) => {
   evt.preventDefault();
 
   let startCoords = {

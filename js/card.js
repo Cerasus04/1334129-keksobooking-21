@@ -32,28 +32,53 @@ const numDecline = (number, words) => {
   return words[2];
 };
 
-const createFragmentObj = (obj) => {
+// const createFragmentObj = (obj) => {
+//   const fragmentFeatures = document.createDocumentFragment();
+//   for (let i = 0; i < obj.length; i++) {
+//     const li = document.createElement(`li`);
+//     li.classList.add(`popup__feature`);
+//     const classAdded = `popup__feature--${obj[i]}`;
+//     li.classList.add(classAdded);
+//     fragmentFeatures.appendChild(li);
+//   }
+//   return fragmentFeatures;
+// };
+
+const createFragmentObj = (featuresCard) => {
   const fragmentFeatures = document.createDocumentFragment();
-  for (let i = 0; i < obj.length; i++) {
+  featuresCard.forEach((feature) => {
     const li = document.createElement(`li`);
     li.classList.add(`popup__feature`);
-    const classAdded = `popup__feature--${obj[i]}`;
+    const classAdded = `popup__feature--${feature}`;
     li.classList.add(classAdded);
     fragmentFeatures.appendChild(li);
-  }
+  });
   return fragmentFeatures;
 };
 
-const createFragmentPhotos = (pins) => {
+// const createFragmentPhotos = (pins) => {
+//   const fragmentPhotos = document.createDocumentFragment();
+//   for (let i = 0; i < pins.length; i++) {
+//     const img = document.createElement(`img`);
+//     img.src = pins[i];
+//     img.width = IMG.WIDTH;
+//     img.height = IMG.HEIGHT;
+//     img.classList.add(`popup__photo`);
+//     fragmentPhotos.appendChild(img);
+//   }
+//   return fragmentPhotos;
+// };
+
+const createFragmentPhotos = (photoSources) => {
   const fragmentPhotos = document.createDocumentFragment();
-  for (let i = 0; i < pins.length; i++) {
+  photoSources.forEach((pins) => {
     const img = document.createElement(`img`);
-    img.src = pins[i];
+    img.src = pins;
     img.width = IMG.WIDTH;
     img.height = IMG.HEIGHT;
     img.classList.add(`popup__photo`);
     fragmentPhotos.appendChild(img);
-  }
+  });
   return fragmentPhotos;
 };
 
@@ -66,7 +91,6 @@ const createCard = (obj) => {
   const cardItem = cardTemplate.cloneNode(true);
   const roomNum = obj.offer.rooms;
   const guestNum = obj.offer.guests;
-  map.insertBefore(cardItem, mapPins);
 
   const cardTitle = cardItem.querySelector(`.popup__title`);
   const cardAddress = cardItem.querySelector(`.popup__text--address`);
@@ -141,6 +165,7 @@ const createCard = (obj) => {
     hideElement(cardPhotos);
   }
 
+  map.insertBefore(cardItem, mapPins);
   mapFilters.insertBefore(cardItem, null);
 
   const closeButton = cardItem.querySelector(`.popup__close`);
@@ -169,9 +194,10 @@ const closePopup = () => {
   }
 
   let pins = mapPins.querySelectorAll(`.map__pin`);
-  for (let i = 0; i < pins.length; i++) {
-    pins[i].classList.remove(`map__pin--active`);
-  }
+
+  pins.forEach((item) => {
+    item.classList.remove(`map__pin--active`);
+  });
 
   document.removeEventListener(`keydown`, onCloseButtonKeyDown);
 };
@@ -180,6 +206,6 @@ window.card = {
   map,
   mapFilters,
   mapPins,
-  createCard,
+  create: createCard,
   closePopup
 };

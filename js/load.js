@@ -33,12 +33,21 @@ const avatarPreview = addForm.querySelector(`.ad-form-header__preview img`);
 const imagesFileName = addForm.querySelector(`#images`);
 const imageContainer = addForm.querySelector(`.ad-form__photo`);
 
+// const fileChooser = (file, onCheckPassed) => {
+//   const fileName = file.name.toLowerCase();
+
+//   const matches = FILE_TYPES.some((it) => {
+//     return fileName.endsWith(it);
+//   });
+
+//   if (matches) {
+//     onCheckPassed(file);
+//   }
+// };
 const fileChooser = (file, onCheckPassed) => {
   const fileName = file.name.toLowerCase();
 
-  const matches = FILE_TYPES.some((it) => {
-    return fileName.endsWith(it);
-  });
+  const matches = FILE_TYPES.some((it) => fileName.endsWith(it));
 
   if (matches) {
     onCheckPassed(file);
