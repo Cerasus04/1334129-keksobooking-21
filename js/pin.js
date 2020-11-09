@@ -31,12 +31,10 @@ const makePin = (data) => {
 const renderPins = (offers) => {
   const fragment = document.createDocumentFragment();
 
-  // offers.forEach((item) => {
-  //   fragment.appendChild(makePin(offers[item]));
-  // });
-  for (let i = 0; i < offers.length; i++) {
-    fragment.appendChild(makePin(offers[i]));
-  }
+  offers.forEach((item) => {
+    fragment.appendChild(makePin(item));
+  });
+
   mapPins.appendChild(fragment);
 };
 

@@ -35,7 +35,7 @@ const filterHousingFeatures = (data) => {
 };
 
 const filterData = window.debounce(() => {
-  const pins = window.mapinit.pins;
+  const pins = window.mapinit.pins();
   closePopup();
   removePins();
 
@@ -59,49 +59,6 @@ const filterData = window.debounce(() => {
 
   renderPins(newPins);
 });
-
-// const filterData = window.debounce(() => {
-//   const pins = window.mapinit.pins();
-//   closePopup();
-//   removePins();
-
-//   let newPins = [];
-
-//   pins.forEach((pins) => {
-//     if (
-//       filterHousingType(pins) &&
-//       filterHousingPrice(pins) &&
-//       filterHousingRooms(pins) &&
-//       filterHousingGuests(pins) &&
-//       filterHousingFeatures(pins)
-//     ) {
-//       newPins.push(pins);
-//     }
-
-//     if (newPins.length === AMOUNT) {
-//       break;
-//     }
-//   }
-
-//   renderPins(newPins);
-// });
-// const onFormSetNewAds = () => {
-//   let newAds = [];
-
-//   ads.forEach((ad) => {
-//     if (filterHousingType(ad)
-//           && filterHousingPrice(ad)
-//           && filterHousingRooms(ad)
-//           && filterHousingGuests(ad)
-//           && filterHousingFeatures(ad)) {
-//       newAds.push(ad);
-//     }
-//   });
-
-//   closePopup();
-//   updateDebouncedAds(newAds);
-// };
-
 
 mapFilters.addEventListener(`change`, filterData);
 

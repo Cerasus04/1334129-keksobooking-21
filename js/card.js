@@ -32,17 +32,6 @@ const numDecline = (number, words) => {
   return words[2];
 };
 
-// const createFragmentObj = (obj) => {
-//   const fragmentFeatures = document.createDocumentFragment();
-//   for (let i = 0; i < obj.length; i++) {
-//     const li = document.createElement(`li`);
-//     li.classList.add(`popup__feature`);
-//     const classAdded = `popup__feature--${obj[i]}`;
-//     li.classList.add(classAdded);
-//     fragmentFeatures.appendChild(li);
-//   }
-//   return fragmentFeatures;
-// };
 
 const createFragmentObj = (featuresCard) => {
   const fragmentFeatures = document.createDocumentFragment();
@@ -53,21 +42,10 @@ const createFragmentObj = (featuresCard) => {
     li.classList.add(classAdded);
     fragmentFeatures.appendChild(li);
   });
-  return fragmentFeatures;
-};
 
-// const createFragmentPhotos = (pins) => {
-//   const fragmentPhotos = document.createDocumentFragment();
-//   for (let i = 0; i < pins.length; i++) {
-//     const img = document.createElement(`img`);
-//     img.src = pins[i];
-//     img.width = IMG.WIDTH;
-//     img.height = IMG.HEIGHT;
-//     img.classList.add(`popup__photo`);
-//     fragmentPhotos.appendChild(img);
-//   }
-//   return fragmentPhotos;
-// };
+  return fragmentFeatures;
+
+};
 
 const createFragmentPhotos = (photoSources) => {
   const fragmentPhotos = document.createDocumentFragment();
@@ -79,7 +57,9 @@ const createFragmentPhotos = (photoSources) => {
     img.classList.add(`popup__photo`);
     fragmentPhotos.appendChild(img);
   });
+
   return fragmentPhotos;
+
 };
 
 const hideElement = (element) => {
