@@ -23,7 +23,7 @@ const correctCoordinates = (shift) => {
   let y = pinMain.offsetTop - shift.y;
 
   if (x < restrictionCoords.minX - PIN_X_GAP) {
-    x = restrictionCoords.minX;
+    x = restrictionCoords.minX - PIN_X_GAP;
   } else if (x > restrictionCoords.maxX - PIN_X_GAP) {
     x = restrictionCoords.maxX - PIN_X_GAP;
   }

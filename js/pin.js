@@ -9,9 +9,9 @@ const SIZE_PIN = {
 const closePopup = window.card.closePopup;
 const createCard = window.card.create;
 const mapPins = window.card.mapPins;
+const pinTemplate = document.querySelector(`#pin`).content.querySelector(`.map__pin`);
 
 const makePin = (data) => {
-  const pinTemplate = document.querySelector(`#pin`).content.querySelector(`.map__pin`);
   const pin = pinTemplate.cloneNode(true);
   const imgEl = pin.querySelector(`img`);
   pin.style.left = `${data.location.x - SIZE_PIN.WIDTH / 2}px`;

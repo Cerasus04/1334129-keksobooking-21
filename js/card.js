@@ -11,6 +11,7 @@ const isMouseLeftButtonEvent = window.util.isMouseLeftButtonEvent;
 const map = document.querySelector(`.map`);
 const mapFilters = map.querySelector(`.map__filters`);
 const mapPins = map.querySelector(`.map__pins`);
+const cardTemplate = document.querySelector(`#card`).content.querySelector(`.map__card`);
 
 const TypeRental = {
   'flat': `Квартира`,
@@ -67,7 +68,6 @@ const hideElement = (element) => {
 };
 
 const createCard = (obj) => {
-  const cardTemplate = document.querySelector(`#card`).content.querySelector(`.map__card`);
   const cardItem = cardTemplate.cloneNode(true);
   const roomNum = obj.offer.rooms;
   const guestNum = obj.offer.guests;
